@@ -1,0 +1,1479 @@
+<!DOCTYPE html>
+<html data-page-node-id="kuaKgrmTqJvzFqUIdeIVTI" lang="zh-CN">
+<head data-page-node-id="Vli0cw9gDsIDkIFfvEl9KT">
+<script data-page-node-id="9QpFPMiM7vsFLaOGjMFllW" src="/page/page_comm/inject.js"></script>
+<meta data-page-node-id="3XmvzQ9EtjrMGUyzOOLjpO" charset="UTF-8">
+<meta data-page-node-id="2sOEQYzClcUcuhb64uZKea" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+<meta data-page-node-id="TCbKB0MmXeOKTCnvehNsj1" content="yes" name="apple-mobile-web-app-capable">
+<meta data-page-node-id="O1V1U65JqujZlGZySZbiDk" content="default" name="apple-mobile-web-app-status-bar-style">
+<link rel="icon" href="https://workbuddy-space-static.codebuddy.work/image/2XcygdZGyt4TgjYSpUMPNb.png">
+<link rel="apple-touch-icon" href="https://workbuddy-space-static.codebuddy.work/image/2XcygdZGyt4TgjYSpUMPNb.png">
+<link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjogIueZvuS4h1RPRE8iLCAic2hvcnRfbmFtZSI6ICLnmb7kuIdUT0RPIiwgInN0YXJ0X3VybCI6ICIuLyIsICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLCAiYmFja2dyb3VuZF9jb2xvciI6ICIjZjJmNGY4IiwgInRoZW1lX2NvbG9yIjogIiNmZmZmZmYiLCAiaWNvbnMiOiBbeyJzcmMiOiAiaHR0cHM6Ly93b3JrYnVkZHktc3BhY2Utc3RhdGljLmNvZGVidWRkeS53b3JrL2ltYWdlLzJYY3lnZFpHeXQ0VGdqWVNwVU1QTmIucG5nIiwgInNpemVzIjogIjUxMng1MTIiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifV19">
+<meta name="apple-mobile-web-app-title" content="百万TODO">
+<meta name="application-name" content="百万TODO">
+<meta name="theme-color" content="#f2f4f8">
+
+<title data-page-node-id="qfdlGf1j64ThmbKqWQXlxK" data-pnid-children="Gk6xq1e3wgrsHUnSv2Z7ho">百万TODO</title>
+<style data-page-node-id="PaK5XwLn2tL1OFwpwCQqE5" data-pnid-children="OfHLa9HANc4p1ZvUC0xXga">
+  :root{
+    --bg:#f2f4f8; --card:#ffffff; --ink:#1a1d26; --sub:#8a8f9e;
+    --fit:#ff8a3d; --study:#ff5a6e; --research:#8b5cf6;
+    --accent:#5b5ff0; --line:#eef0f5; --green:#2bb3a3;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",sans-serif;
+    background:var(--bg);color:var(--ink);
+    max-width:480px;margin:0 auto;min-height:100vh;padding-bottom:100px;
+  }
+  .header{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:20px 20px 14px;position:sticky;top:0;background:var(--bg);z-index:10;
+  }
+  .header h1{font-size:24px;font-weight:700}
+  .month-nav{
+    display:flex;align-items:center;gap:10px;background:#fff;
+    border-radius:999px;padding:6px 14px;font-size:14px;font-weight:600;
+    box-shadow:0 2px 8px rgba(0,0,0,.04);
+  }
+  .month-nav button{border:none;background:none;font-size:16px;color:var(--sub);width:24px;height:24px;cursor:pointer;line-height:1}
+  .card{background:var(--card);border-radius:20px;margin:12px 16px;padding:20px;box-shadow:0 2px 12px rgba(20,24,40,.04)}
+  .summary{text-align:center;padding:28px 20px}
+  .summary .label{font-size:13px;color:var(--sub)}
+  .summary .big{font-size:40px;font-weight:800;letter-spacing:-1px;margin:6px 0}
+  .summary .meta{font-size:13px;color:var(--sub)}
+  .streak{
+    display:inline-flex;align-items:center;gap:4px;background:#fff4ec;
+    color:#ff8a3d;font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;margin-top:8px;
+  }
+  .sec-title{display:flex;justify-content:space-between;align-items:baseline;font-size:16px;font-weight:700;margin-bottom:8px}
+  .sec-title span{font-size:12px;color:var(--sub);font-weight:400}
+  /* donut */
+  .chart-wrap{display:flex;justify-content:center;padding:8px 0 4px}
+  .donut{position:relative;width:190px;height:190px}
+  .donut svg{transform:rotate(-90deg)}
+  .donut .center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+  .donut .center .v{font-size:26px;font-weight:800}
+  .donut .center .t{font-size:11px;color:var(--sub);margin-top:2px}
+  .legend{margin-top:14px}
+  .legend .row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px}
+  .legend .row:last-child{border-bottom:none}
+  .dot{width:10px;height:10px;border-radius:4px;flex-shrink:0}
+  .bar-track{flex:1;height:8px;border-radius:4px;background:var(--line);overflow:hidden}
+  .bar-fill{height:100%;border-radius:4px;transition:width .5s ease}
+  .pct{width:44px;text-align:right;color:var(--sub);font-size:13px}
+  .cnt{width:52px;text-align:right;font-weight:700;font-size:14px}
+  /* tasks */
+  .task{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}
+  .task:last-child{border-bottom:none}
+  .check{
+    width:26px;height:26px;border-radius:50%;border:2px solid var(--line);
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;
+    cursor:pointer;transition:all .2s;font-size:14px;color:#fff;background:#fff;
+  }
+  .check.on{border-color:transparent}
+  .task .name{flex:1;font-size:15px}
+  .task .name.done{color:var(--sub);text-decoration:line-through}
+  .task .tag{font-size:11px;padding:3px 8px;border-radius:6px;font-weight:600}
+  .del{color:#c9cdd8;font-size:18px;padding:4px 8px;cursor:pointer;background:none;border:none}
+  /* 雅思展开打卡项 */
+  .subchecks{display:flex;flex-wrap:wrap;gap:6px;padding:2px 0 12px 40px;margin-top:-8px}
+  .subcheck{font-size:12px;padding:4px 11px;border-radius:999px;border:1px solid var(--line);color:var(--sub);cursor:pointer;user-select:none;background:#fff}
+  .subcheck.on{background:rgba(47,111,237,.10);border-color:rgba(47,111,237,.45);color:#2f6fed;font-weight:600}
+  /* week chart */
+  .week-chart{display:flex;align-items:flex-end;gap:8px;height:110px;padding:10px 2px 0}
+  .wcol{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%;justify-content:flex-end}
+  .wstack{width:100%;max-width:28px;display:flex;flex-direction:column-reverse;border-radius:6px;overflow:hidden;background:var(--line)}
+  .wstack i{display:block;width:100%}
+  .wnum{font-size:11px;color:var(--sub);font-weight:600}
+  .wday{font-size:11px;color:var(--sub)}
+  .wday.today{color:var(--accent);font-weight:700}
+  .week-summary{margin-top:10px;font-size:13px;color:var(--sub);text-align:center}
+  /* books */
+  .book{padding:14px 0;border-bottom:1px solid var(--line)}
+  .book:last-child{border-bottom:none}
+  .book .btop{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+  .book .bname{flex:1;font-size:15px;font-weight:600}
+  .book .bpages{font-size:12px;color:var(--sub)}
+  .book .btrack{height:10px;border-radius:5px;background:var(--line);overflow:hidden}
+  .book .bfill{height:100%;border-radius:5px;background:linear-gradient(90deg,#34c98e,#2bb3a3);transition:width .4s}
+  .book .bmeta{display:flex;justify-content:space-between;align-items:center;margin-top:8px;font-size:12px;color:var(--sub)}
+  .book .blog{display:flex;gap:6px}
+  .book .blog button{border:1.5px solid #34c98e;color:#2bb3a3;background:#fff;border-radius:8px;font-size:12px;font-weight:700;padding:4px 10px;cursor:pointer}
+  .add-book-btn{width:100%;margin-top:12px;border:2px dashed #d7dae3;background:none;border-radius:14px;padding:12px;font-size:14px;color:var(--sub);cursor:pointer;font-weight:600}
+  /* diet & plan */
+  .plan-block{margin-bottom:16px}
+  .plan-block:last-child{margin-bottom:0}
+  .plan-h{font-size:13px;font-weight:700;color:var(--accent);margin-bottom:6px}
+  .diet-table{width:100%;border-collapse:collapse;font-size:12.5px;line-height:1.5}
+  .diet-table th{text-align:left;color:var(--sub);font-weight:600;padding:8px 6px;border-bottom:2px solid var(--line);white-space:nowrap}
+  .diet-table td{padding:9px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+  .diet-table tr:last-child td{border-bottom:none}
+  .diet-table tr.total td{font-weight:700;color:var(--ink);background:#fafbfd}
+  .num{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+  .tea-row{display:flex;gap:8px;align-items:baseline;padding:8px 10px;border-radius:10px;font-size:13px}
+  .tea-row .wd{width:38px;font-weight:600;flex-shrink:0}
+  .tea-row .tp{flex:1}
+  .tea-row .tip{color:var(--sub);font-size:11.5px}
+  .tea-row.today{background:#f0f1ff;border:1px solid var(--accent)}
+  .tea-row.today .wd{color:var(--accent)}
+  .rule-list{list-style:none;font-size:13px;line-height:1.65}
+  .rule-list li{padding:6px 0 6px 18px;position:relative;border-bottom:1px dashed var(--line)}
+  .rule-list li:last-child{border-bottom:none}
+  .rule-list li::before{content:"•";position:absolute;left:4px;color:var(--accent);font-weight:700}
+  /* today schedule */
+  .window-pill{
+    display:inline-block;background:#eafaf6;color:var(--green);font-size:12px;
+    font-weight:700;padding:4px 12px;border-radius:999px;margin-bottom:10px;
+  }
+  .window-pill.rest{background:#f2f4f8;color:var(--sub)}
+  .timeline{list-style:none}
+  .timeline li{display:flex;gap:12px;padding:7px 0;font-size:13.5px;align-items:baseline}
+  .timeline .tt{width:88px;flex-shrink:0;color:var(--accent);font-weight:700;font-variant-numeric:tabular-nums;font-size:12.5px}
+  .timeline .tc{flex:1;line-height:1.5}
+  .timeline li.note .tc{color:var(--sub);font-size:12px}
+  /* log */
+  .daylog{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--line);font-size:14px}
+  .daylog:last-child{border-bottom:none}
+  .daylog .d{color:var(--ink);font-weight:600}
+  .daylog .d small{color:var(--sub);font-weight:400;margin-left:6px}
+  .daylog .s{color:var(--sub);font-size:13px}
+  .badges{display:flex;gap:4px}
+  .badges i{width:8px;height:8px;border-radius:50%;display:inline-block}
+  /* io */
+  .io-btns{display:flex;gap:10px}
+  .io-btn{flex:1;border:2px solid var(--line);background:#fff;border-radius:14px;padding:13px 0;font-size:14px;font-weight:600;cursor:pointer;color:var(--ink)}
+  .io-btn:active{background:var(--bg)}
+  .io-tip{margin-top:10px;font-size:12px;color:var(--sub);text-align:center}
+  .io-btns .io-btn.primary{background:#2f6fed;color:#fff;border:none;font-weight:700}
+  /* fab & sheet */
+  .fab{
+    position:fixed;bottom:28px;left:50%;transform:translateX(-50%);
+    background:var(--accent);color:#fff;border:none;border-radius:999px;
+    padding:15px 34px;font-size:16px;font-weight:700;cursor:pointer;
+    box-shadow:0 8px 24px rgba(91,95,240,.35);z-index:20;
+  }
+  .fab:active{transform:translateX(-50%) scale(.96)}
+  .mask{position:fixed;inset:0;background:rgba(20,24,40,.45);z-index:30;display:none;align-items:flex-end;justify-content:center}
+  .mask.show{display:flex}
+  .sheet{
+    background:#fff;border-radius:24px 24px 0 0;width:100%;max-width:480px;
+    padding:24px 20px calc(20px + env(safe-area-inset-bottom));animation:up .25s ease;
+  }
+  @keyframes up{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+  .sheet h3{font-size:18px;margin-bottom:16px}
+  .cats{display:flex;gap:10px;margin-bottom:16px}
+  .cat{flex:1;border:2px solid var(--line);border-radius:14px;padding:12px 0;text-align:center;font-size:14px;font-weight:600;cursor:pointer;background:#fff}
+  .cat.sel{border-color:currentColor;background:color-mix(in srgb,currentColor 8%,#fff)}
+  .sheet input{width:100%;border:2px solid var(--line);border-radius:14px;padding:14px;font-size:15px;margin-bottom:16px;outline:none}
+  .sheet input:focus{border-color:var(--accent)}
+  .btn-primary{width:100%;background:var(--accent);color:#fff;border:none;border-radius:14px;padding:15px;font-size:16px;font-weight:700;cursor:pointer}
+  details.plan-toggle summary{
+    cursor:pointer;font-size:13px;color:var(--accent);font-weight:600;
+    padding:8px 0;list-style:none;
+  }
+  details.plan-toggle summary::before{content:"▸ ";font-size:11px}
+  details.plan-toggle[open] summary::before{content:"▾ "}
+
+  .phd-now{
+    background:linear-gradient(135deg,rgba(91,147,247,.10),rgba(139,92,246,.10));
+    border-radius:14px;padding:14px;margin-bottom:12px;
+  }
+  .phd-now-t{font-size:15px;font-weight:700;margin-bottom:2px}
+  .phd-now-d{font-size:12px;color:var(--sub);margin-bottom:10px}
+  .phd-line{font-size:13px;line-height:1.55;display:flex;gap:8px;margin-top:5px}
+  .phd-line span{
+    flex:none;font-size:11px;font-weight:700;color:var(--accent);
+    background:rgba(91,147,247,.12);border-radius:5px;padding:1px 6px;height:fit-content;
+  }
+  .phd-table-wrap{overflow-x:auto;margin-top:10px}
+  .phd-table{width:100%;border-collapse:collapse;font-size:12px}
+  .phd-table th,.phd-table td{
+    border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top;
+  }
+  .phd-table th{background:rgba(91,147,247,.08);font-weight:700;white-space:nowrap}
+  .phd-table tr.on td{background:rgba(91,147,247,.10);font-weight:600}
+  .phd-dl{
+    border-left:3px solid var(--line);padding:7px 0 7px 11px;margin-top:9px;
+  }
+  .phd-dl.hot{border-left-color:#dc2626}
+  .phd-dl-n{font-size:13px;font-weight:700}
+  .phd-dl-t{font-size:12px;color:var(--sub);margin-top:2px}
+  .phd-dl-p{font-size:12px;margin-top:2px}
+
+  /* 申博周次切换器 */
+  .phd-sw{display:inline-flex;align-items:center;gap:4px;flex-shrink:0}
+  .phd-arrow{width:24px;height:24px;line-height:1;border:none;border-radius:8px;background:rgba(91,147,247,.12);color:#4a7fe0;font-size:15px;font-weight:700;cursor:pointer;padding:0}
+  .phd-arrow:active{transform:scale(.9)}
+  .phd-sel{height:24px;border-radius:8px;border:1px solid rgba(91,147,247,.22);background:#fff;color:var(--ink);font-size:12px;padding:0 2px;max-width:72px;font-weight:600}
+  .phd-today{height:24px;border-radius:8px;border:1px solid rgba(91,147,247,.22);background:#fff;color:var(--sub);font-size:11px;padding:0 7px;cursor:pointer;font-weight:600}
+  .phd-today.on{background:rgba(91,147,247,.14);color:#4a7fe0}
+  .phd-wk{font-size:13px;font-weight:600;margin-bottom:8px;color:#4a7fe0}
+  .phd-sub{font-size:12px;color:var(--sub);margin-top:6px;line-height:1.6}
+</style>
+</head>
+<body data-page-node-id="eQ2BdQOZQ9QWM8HwIAANWc">
+
+<div data-page-node-id="4hX3p0Ysb6WGdFppLzchOo" class="header">
+  <h1 data-page-node-id="BlL2eI0e97QwqtESudX3FW"><!--pnid:bpmXObV4l5Kp7tKUJI2uQW-->百万TODO</h1>
+  <div data-page-node-id="TJ1mbQ3YD0fWw5uK2XaBLK" class="month-nav">
+    <button data-page-node-id="8FIq2wZcCT8fOGBwP6JEe5" onclick="shiftMonth(-1)"><!--pnid:YvJXmjjxoRdZaMeljbA2wc-->‹</button>
+    <span data-page-node-id="ELdqx3AdLXT3r6ZCYla0Bp" id="monthLabel"></span>
+    <button data-page-node-id="ZjlVhisWasLjlBbVDmNFSi" onclick="shiftMonth(1)"><!--pnid:Q5TbKwgm0Tv4Iw9WGMUIES-->›</button>
+  </div>
+</div>
+
+<div data-page-node-id="nJ1LIla8JJ0Gx0zzyTj7em" class="card summary">
+  <div data-page-node-id="P7jrCbddzVL2QezVXS8UAl" class="label"><!--pnid:USZMgKpMdS2gcYaH7BUEqT-->本月完成</div>
+  <div data-page-node-id="9C4ca0Obea51JLl4wpPAIK" class="big" data-sp-bindable="database" data-sp-database-id="RaxQSifIYonCyazsSI1M3t" id="totalCount"><!--pnid:A3XAznsKeKaw9VcSQ59lI6-->0</div>
+  <div data-page-node-id="wPnV54WjcROOfuRZaXx88M" class="meta" data-sp-bindable="database" data-sp-database-id="RaxQSifIYonCyazsSI1M3t" id="totalMeta"></div>
+  <div data-page-node-id="O1uK3VF8cd4pfybCjQ4MF7"><span data-page-node-id="LrowBtXmcJM5VAcBd5xodA" class="streak"><!--pnid:RQCZQ56LYcxo4YcuzMtzxi-->🔥 连续打卡 <b data-page-node-id="dAE6pqZ345QLfKYeiRoncy" data-sp-bindable="database" data-sp-database-id="RaxQSifIYonCyazsSI1M3t" id="streakNum"><!--pnid:J960J980dAfpdCo4TtPrPl-->0</b><!--pnid:9MHuvNU1YQssPJ24TfgJ7C--> 天</span></div>
+</div>
+
+<div data-page-node-id="j3HhDYUa3nttHDn9WZQrkz" class="card">
+  <div data-page-node-id="1FpMoKJVRprqLSKBYkGKcd" class="sec-title"><!--pnid:JRBGwgio9Hi4KiDX3XO0wa-->今日安排 <span data-page-node-id="CB4l8pHaG9qS1VMcYMkkEv" id="planDayLabel"></span></div>
+  <div data-page-node-id="adZA9KsC7NyLZM1y2Ur00b" id="todayPlan"></div>
+</div>
+
+<div data-page-node-id="PRuR5Ks2mfJhE7DiCVEKkx" class="card">
+  <div data-page-node-id="c4R4dNHLmigMRAx1RYm0Ly" class="sec-title"><!--pnid:ZwvTj4WYyqHDK0bpFfs3OP-->今日待办 <span data-page-node-id="JXQdgXJjg5EDPjzLd0NDPS" id="todayLabel"></span></div>
+  <div data-page-node-id="bmlSOyetiSDf9WcQIIz97O" data-sp-bindable="database" data-sp-database-id="qykB4g6O1RCuvwQiEBbQ4e" id="todayTasks"></div>
+</div>
+
+<div data-page-node-id="rRovstO5fIh0oimBkkjnuS" class="card">
+  <div data-page-node-id="ID3JGM4Whw3LEpHiYbesLl" class="sec-title"><!--pnid:xIWn40WZsbw7xqiqO7tiY3-->本周趋势 <span data-page-node-id="OMvms4PPBNObXaWoYoNbfx"><!--pnid:iNOjKMuk3L5NS7HsJyJshQ-->近 7 天打卡数</span></div>
+  <div data-page-node-id="6lJBkgqp1hY9wcFlJVg7u6" class="week-chart" data-sp-bindable="database" data-sp-database-id="RaxQSifIYonCyazsSI1M3t" id="weekChart"></div>
+  <div data-page-node-id="15hzG4Ek57IROCaahFDfqK" class="week-summary" data-sp-bindable="database" data-sp-database-id="RaxQSifIYonCyazsSI1M3t" id="weekSummary"></div>
+</div>
+
+<div data-page-node-id="uhOGtMiolPSkNMj0W3Woej" class="card">
+  <div data-page-node-id="l7zCkSIWXnW5qwYema8KCR" class="sec-title"><!--pnid:K5jzUzMXfj56Vrl7U6koRk-->打卡构成 <span data-page-node-id="F0XiMv9fgjt13qaJ1XfDdR"><!--pnid:gQLADjJZDkHJStYs2EPCMZ-->本月三类占比</span></div>
+  <div data-page-node-id="vxFWBjy6q8J21mrDUcdGvO" class="chart-wrap">
+    <div data-page-node-id="cJbmXpaTKUj0pwvgTgyCtb" class="donut">
+      <svg data-page-node-id="93oY6QpZ9eMSuo680jxi1u" height="190" id="donutSvg" viewBox="0 0 190 190" width="190"></svg>
+      <div data-page-node-id="AIpfIC5XjYRzvqBHxNDZrs" class="center">
+        <div data-page-node-id="THt2wmpoCmICjVXpuzYre0" class="t"><!--pnid:4JA2BnOTaZbryDXGLIOG3B-->完成率</div>
+        <div data-page-node-id="OUOdPzGVL22JOksAXtM1Y9" class="v" data-sp-bindable="database" data-sp-database-id="RaxQSifIYonCyazsSI1M3t" id="rateVal"><!--pnid:u2nAEqFmakI4aYemwFeirS-->0%</div>
+        <div data-page-node-id="6dlBDUu3zQUq49xVwKtlks" class="t" data-sp-bindable="database" data-sp-database-id="RaxQSifIYonCyazsSI1M3t" id="rateSub"></div>
+      </div>
+    </div>
+  </div>
+  <div data-page-node-id="93LiHn5gBRVg5CWAQ42w8C" class="legend" data-sp-bindable="database" data-sp-database-id="RaxQSifIYonCyazsSI1M3t" id="legend"></div>
+</div>
+
+<div data-page-node-id="kDujl5J7rNxtUxGPvnOv1D" class="card">
+  <div data-page-node-id="BTSXm1UouFs5msGV7aEeAt" class="sec-title"><!--pnid:GqlVyKKliS8d3cLvJ40zP0-->📖 阅读计划 <span data-page-node-id="CuulFGXozupbmP5ngBbc9W" data-sp-bindable="database" data-sp-database-id="KiWpbL1Nehh09kIlSzlTqv" id="readingSub"></span></div>
+  <div data-page-node-id="LrqxlZTa8UQNw3d7kGpOMy" data-sp-bindable="database" data-sp-database-id="KiWpbL1Nehh09kIlSzlTqv" id="bookList"></div>
+  <button data-page-node-id="4lpFkKj3sgOeAHvf5n9x73" class="add-book-btn" onclick="addBook()"><!--pnid:tkXGVJRRf2NHS5GFLVbv5Z-->＋ 添加一本书</button>
+</div>
+
+<div data-page-node-id="idvMmznRh0B56pxpjcH774" class="card">
+  <div data-page-node-id="rwa1MO4HLhhk8kbFhKRUHT" class="sec-title"><!--pnid:lXtMyjshAZtFVrJ9rSIEBH-->🍱 饮食计划 <span data-page-node-id="otyuUq3R7nZC2oyKJqFYyF"><!--pnid:eVE7K9uB5bAuKmcgZEScG3-->蛋白 ≈87g · 纤维 ≈14g/天</span></div>
+  <div data-page-node-id="e0CCAym6D20MB8qIxTlVzo" class="plan-block">
+    <table data-page-node-id="bVjyjTkiDwVf8RGMDKoBfi" class="diet-table">
+      <tr data-page-node-id="jZUDyIyyIAaZiFO4gZBDhb"><th data-page-node-id="1qLLiOzSPxzR135Rvsr7gd"><!--pnid:3U7kS5cS2lHRGpOB2dfvs1-->餐次</th><th data-page-node-id="ota3Ng6fnws0GwzJXRiPRb"><!--pnid:J8cNhKgTgrTYc3cL5VeHIE-->内容</th><th data-page-node-id="ybQV32lfDACS0ApGESRVBP" class="num"><!--pnid:y030g7yJupN6ORbCwM9Gvh-->蛋白</th><th data-page-node-id="ZtbhprVfP4KKXIEMWNCOA0" class="num"><!--pnid:THilqNIUEo196Z19g13yDm-->纤维</th></tr>
+      <tr data-page-node-id="ro9JVifbQ3Xf3sPsZbvYRN"><td data-page-node-id="BIbXxf7Cy7QBw6Ja1cftVo"><b data-page-node-id="daQtf7hw1ILeIptc68ngW3"><!--pnid:EGlnRLTtjPJxoXjmvly3fw-->早 9:00</b></td><td data-page-node-id="rdQzaMhwu2epYJlcrIeQHq"><!--pnid:tzusFitdb0ST9zQmQ7aj6j-->牛奶 250ml + 全蛋 1 个 + 带皮苹果半个</td><td data-page-node-id="GiTVhCYUMG3GmHgM3lRYVr" class="num"><!--pnid:kKuvWnMLvpqe28ozRqralx-->22g</td><td data-page-node-id="h7LB4yzvnL8evc9Nbp9aZA" class="num"><!--pnid:zYjwc3FUMLJa3EdjdAYspN-->+2g</td></tr>
+      <tr data-page-node-id="NEBywqFxDiFE63VQzT62GW"><td data-page-node-id="sEa0Zy0sBhKEwa2cX0Vd5W"><b data-page-node-id="pIuG2cM0nEKqTKVT8rN3XO"><!--pnid:mMCWqgkHROwS6VxXMrqhDA-->午 12:30</b></td><td data-page-node-id="3rlBL2XjvuCQjLgzAUiSYh"><!--pnid:F74TnFkCxhimUitYX1EouB-->正常吃（主食 1 拳 + 肉/鱼/豆腐 1 份 + 蔬菜 2 捧）</td><td data-page-node-id="kUemFwTXCnnQ7g1DY2qu6T" class="num"><!--pnid:vgfIobFmZBQTxXwRPRmnxv-->32g</td><td data-page-node-id="z3hmHeohaU3j7Dt4gLDrHz" class="num"><!--pnid:R3Z5gvpuoEWWbg2sMLF2iB-->+9g</td></tr>
+      <tr data-page-node-id="zECBDEH9iLcwfdcP6ggMRz"><td data-page-node-id="EMRKDP84zV07SkaK8RtAUD"><b data-page-node-id="Qz1bIrbT5tEeaBkXSMuDrX"><!--pnid:GVpkufIjB87uON5aRlZ8Sz-->晚 16:00</b></td><td data-page-node-id="VU0b0WrSPuAkcJXU0mBpvY"><!--pnid:sEk6XIFuHAOYtAKUD3ioi2-->鸡胸 80g + 全蛋 1 个</td><td data-page-node-id="wwKM7Ueb61XCVSOZcdxJHr" class="num"><!--pnid:6yJkThDNmt3199aixT8Mdo-->28g</td><td data-page-node-id="XGKSjoULHK6TMKfalfEisc" class="num"><!--pnid:3yHrOrLZvdW5GFc4LLPBJ5-->+1g</td></tr>
+      <tr data-page-node-id="qsxzHlGRLBQirV8LNuCTjp"><td data-page-node-id="o3nLtGB8gYxc5AEDuG6EYr"><b data-page-node-id="gSn2vHrmhmfrwDfErZkYzN"><!--pnid:1LIJzBAlGzYFm6yZwv4eF9-->窗口内加餐</b></td><td data-page-node-id="RoXTGvvyvIjaEIqytmCvcz"><!--pnid:0ZN787nHHfojiFzuTE8T3a-->可可粉 5g 冲奶</td><td data-page-node-id="jAxyMBulgqo8nZQZr5AARb" class="num"><!--pnid:9cWN92pdhM71BHB9NtaHSr-->5g</td><td data-page-node-id="n6dB5igh7EGlkPvSmRSP3b" class="num"><!--pnid:qpkPU4GnEqB7zRpiAG1JDT-->+2g</td></tr>
+      <tr data-page-node-id="8RMDxd0DbYA6hDwGpT12Zr" class="total"><td data-page-node-id="IO39vpo6iX1WMU2dLhVijk"><!--pnid:6TxF03CYE5qR0s87ayJO3Q-->全天合计</td><td data-page-node-id="uWGfnxvpGR81noS1KF6Dw1"><!--pnid:PyUSIwb4MiM2L5wmblsout-->—</td><td data-page-node-id="Z7QN72iHnc6KrUrp3kVKQV" class="num"><!--pnid:qOuOQ4XlFrOYjoeuFmnKEH-->≈87g</td><td data-page-node-id="E3or7YvBC7bgrESOfKjrcI" class="num"><!--pnid:SGMK0J4BtyiXL318Z24n6k-->≈14g</td></tr>
+    </table>
+  </div>
+</div>
+
+<div data-page-node-id="kJwfIpZGIyhCx4fDvNFcQZ" class="card">
+  <div data-page-node-id="pJXCvBt2D2uj2toPpde7IH" class="sec-title"><!--pnid:Wni7DzxB9GWFRJ1QWbUqOX-->🍵 饮品规则 <span data-page-node-id="Kv4tSrJoiNPb8IKrcUa8f4"><!--pnid:kUFTTfR3vze9Iig84HriOt-->咖啡因敏感，少喝咖啡因</span></div>
+  <ul data-page-node-id="W0RTwEWbaIVygUzZSYLJd9" class="rule-list">
+    <li data-page-node-id="jr9CxV7UbFYw70IWWhsXHF"><!--pnid:kvAbeK6WPZfKMULSFo2Xbf-->茶类 16 点前喝完；<b data-page-node-id="diOdv6BY41P8AsQ9u4c2bN"><!--pnid:PIGH2lRR3r5aNNtuW1ExZu-->含咖啡因饮品限 12 点前</b><!--pnid:I19WDPKWIjgGI0NhNxlEI9-->（咖啡因敏感，咖啡、可可、红茶、奶茶同限 12 点前）</li>
+    <li data-page-node-id="8Q48ICmYrZAxfFgPI63GdB"><!--pnid:jg7ySKIWTlm7djkPM6w49y-->柠檬不沸水冲泡、喝完漱口</li>
+    <li data-page-node-id="42zIBTwSRhubXPBpajT4Oa"><!--pnid:F3SrH7tNl48LoOByhKTFGw-->不加糖不加蜂蜜；心慌就立刻泡淡或停饮</li>
+    <li data-page-node-id="VsmVzygwrCyfU0JA7SfEVU"><!--pnid:G1FOKWr57JjdFWeMjLvIZb-->茶饮 800–1200 ml，其余喝白开水</li>
+    <li data-page-node-id="3yZJ2MCqzv5pvw9yV3pxAr"><!--pnid:TaPePCiN1LF50LRHrxB3kO-->粉剂不替代维生素补剂，<b data-page-node-id="8Wv5NaiPLq69YFEy2yhSGu"><!--pnid:dxvTniuwifzhVd2cNcdEZH-->维 D 400–800 IU 需单独补</b></li>
+  </ul>
+</div>
+
+<div data-page-node-id="u26AZpVr3pjldgRKCk1wb2" class="card">
+  <div data-page-node-id="YejEsjUOZrlrVxSFuYFtA2" class="sec-title"><!--pnid:jUyUhFMN4uCrpdsxMv0FCr-->📋 打卡总规则</div>
+  <ul data-page-node-id="ACUBzGilzms8mYTNzaJgKm" class="rule-list">
+    <li data-page-node-id="lTfv17s6BXGsAa6HyP4pIY"><b data-page-node-id="o5GiffEOYMNf5aHXo6TGZa"><!--pnid:i6PIftoDSPNxChnVmFqu4f-->训练</b><!--pnid:vFIuIaKUo9nO6xJxChVKkF-->：训练 1.5 小时（器械 1–2 个为主）；状态不好可减量</li>
+    <li data-page-node-id="WOpYjyXp2OREFJLKvU8HK1"><b data-page-node-id="j4faA69ogRXb7z18VPFqnl"><!--pnid:mVZjRkbi0awKtPh0B31yhW-->练前</b><!--pnid:CNOVtyUfhyNbEXVOfZBfuV-->：200 ml 纯牛奶</li>
+    <li data-page-node-id="qPLPquxZ3SPPLHxyNLT9De"><b data-page-node-id="HYlcdzO2yyKhMm1DvqzAPp"><!--pnid:frBYdxAfsscsmFirtv0GlI-->练后补给</b><!--pnid:z6iYMTN3Nhy7seL4b7ZNSd-->：1 全蛋 + 1 苹果（练后 60 min 内吃完即可，不必卡点）</li>
+    <li data-page-node-id="Ct7k2L9JmEXFf9c0hS9H8N"><b data-page-node-id="TJQobvd4RAHjTuGxHaWDE5"><!--pnid:0Bn85ouFd08yksTjFsJouJ-->加餐二选一</b><!--pnid:DTtLxYdhZDbEZNq1WHMWLn-->：50g 鸡胸 / 1 蛋 + 1 袋奶</li>
+    <li data-page-node-id="3j1i0G04YLFzfdFjCaZDAp"><b data-page-node-id="N8L1WHM0fym5sw5o4NUL5u"><!--pnid:yK6owHJvzY2AZlO5Jq3YIc-->进食窗口</b><!--pnid:nsyK96qngcUEmWICv1TqLJ-->：周一/六/日 严格 16+8（09:00–17:00）；周二/三 09:00–18:30；周四 09:00–19:30</li>
+    <li data-page-node-id="A3ZrXkX6FbXKyzPrKjYvAm"><b data-page-node-id="HldAC037JuHYwVZrxZidY5"><!--pnid:C91mokY3AUYlizEDWLQkc8-->周五休息</b><!--pnid:dBiKuuMlAiH1D2eWj9FdUp-->不健身，低 GI 少油，窗口 09:00–17:00 不延长</li>
+    <li data-page-node-id="Ct3rr6qBJBGfc4bEuCnZuh"><!--pnid:dGWx9t8zFGcecyEP838wBT-->每日全蛋 ≤ 2 个；水果选苹果、红心芭乐</li>
+    <li data-page-node-id="Tc38lwO3GBuOwiwCCFEdsw"><b data-page-node-id="EaQJll7YIhBhB3FoeThaOy"><!--pnid:GolbTlUXN96a3oy6O4n3c2-->每日固定补充</b><!--pnid:2cZVbmrw13DK637ZIBvbRJ-->：维 D 400–800 IU（单独补，粉剂不替代）</li>
+  </ul>
+  <details data-page-node-id="TXODRrkT9guic2JXesvfX7" class="plan-toggle">
+    <summary data-page-node-id="jk1U8TbtrinNuHQrTHyqnJ"><!--pnid:GcG5OkKfSYsJHHGzwvKZ7k-->查看各日详细作息</summary>
+    <div data-page-node-id="ROml4EppYm8iLASEmuVnr5" id="allPlans" style="margin-top:8px"></div>
+  </details>
+</div>
+
+<div data-page-node-id="ZoP0Aw4eldEzAoXGrqdTIS" class="card">
+  <div data-page-node-id="jIkzyUuwFWWVIy1CTDYndM" class="sec-title"><!--pnid:NqepdamQv31fklsCDuI4PV-->本月明细</div>
+  <div data-page-node-id="wJ9SI4WWKE3ycTJvUft4ZC" data-sp-bindable="database" data-sp-database-id="RaxQSifIYonCyazsSI1M3t" id="dayLog"></div>
+</div>
+
+<div class="card">
+  <div class="sec-title">🎓 申博计划 <span id="phdSub"></span></div>
+  <div id="phdPlan"></div>
+</div>
+
+<div data-page-node-id="fSLLgeQ7yPPMcEabCdzm0D" class="card">
+  <div data-page-node-id="nlxPxzlRxu69whSkwhkvNi" class="sec-title"><!--pnid:YzolNeDUu4fpXmM2win6Tu-->数据管理</div>
+  <div data-page-node-id="1RBeS6phHmKiHKLrHp49M3" class="io-btns">
+    <button data-page-node-id="7IXWXT6MCfhbSwwXmakOgG" class="io-btn primary" onclick="exportData()"><!--pnid:f4W3yzK4if8ErDbhl6L4e7-->⬇️ 导出备份</button>
+    <button data-page-node-id="tTAj34Cx7rSSBjV5PM38ht" class="io-btn" onclick="document.getElementById('importFile').click()"><!--pnid:epdlrEpnXrLEhZrNhVtiCO-->⬆️ 导入恢复</button>
+    <input data-page-node-id="0uwGn2iKY2HTh4YaXenAue" accept=".json" id="importFile" onchange="importData(event)" type="file" style="display:none">
+  </div>
+  <div data-page-node-id="I1kV9zaF413byF5DkVkWeR" class="io-tip" id="ioTip"><!--pnid:ezLZZfR4pbAJ7ccUbOLR8q-->导出的 JSON 文件可传到新设备导入，数据不丢</div>
+</div>
+
+<button data-page-node-id="ViluOuLdixRAAppHwx9s2C" class="fab" onclick="openSheet()"><!--pnid:MySLqSBX9l9KwRXJkDWi27-->＋ 添加目标</button>
+
+<div data-page-node-id="cqoOFnGXSsbSdklTr3iQWg" class="mask" id="mask" onclick="if(event.target===this)closeSheet()">
+  <div data-page-node-id="3OYH4Ar2QmOyfhfu8gEQj4" class="sheet">
+    <h3 data-page-node-id="slZw4DXybyuzmV6aV3gAnq"><!--pnid:Ob8qvi4wccmUj8dYLdMaKv-->添加一个每日目标</h3>
+    <div data-page-node-id="QsFgngY2CDGdUPuayNzni4" class="cats" id="catPicker">
+      <button data-page-node-id="iBUsfjiM476bcIpOBqxvnP" class="cat sel" data-cat="fit" style="color:var(--fit)"><!--pnid:6ZDAf3B47oapQWXUmrwPA5-->💪 健身</button>
+      <button data-page-node-id="SXkehybF61uei7A9OGIEXz" class="cat" data-cat="study" style="color:var(--study)"><!--pnid:TLgpUsTYqQNK2MHPlA0DG2-->📚 学习</button>
+      <button data-page-node-id="trk7XpQwvihIklnFXvvP26" class="cat" data-cat="research" style="color:var(--research)"><!--pnid:kLVS13mB3Qo7seyfWRWCjz-->🔬 研究</button>
+    </div>
+    <div class="cats" id="subPicker" hidden></div>
+    <input data-page-node-id="erD2tQpUmancpS2Qsez3Q5" id="taskInput" maxlength="20" placeholder="例如：跑步 30 分钟 / 读论文 1 篇">
+    <button data-page-node-id="1Ex73ATQHL2SiKFfDkIY7U" class="btn-primary" onclick="addTask()"><!--pnid:33FtPXR3qwUfU6lPHsXN4C-->保存</button>
+  </div>
+</div>
+
+<script data-page-node-id="KqixFDo2Brq3DC8x3x9jCk" data-pnid-children="IZUBtXkJfHbffJdAYA7uyn">
+const CATS = {
+  fit:      {name:'健身', icon:'💪', color:'#ff8a3d', subs:[]},
+  study:    {name:'学习', icon:'📚', color:'#ff5a6e', subs:['雅思','阅读专著/文献/史料','申博','复盘/整理笔记']},
+  research: {name:'阅读专著/文献/史料', icon:'🔬', color:'#8b5cf6', subs:[]},
+};
+/* 各学习子类的专属图标与颜色（覆盖分类默认） */
+const SUBMETA = {
+  '雅思':               {icon:'🪙', color:'#2f6fed'},
+  '阅读专著/文献/史料': {icon:'🔬', color:'#8b5cf6'},
+  '申博':               {icon:'📚', color:'#16a34a'},
+  '复盘/整理笔记':      {icon:'📝', color:'#dc2626'},
+};
+/* 雅思下设的展开打卡项 */
+const IELTS_SUBS = ['单词','听力','口语','阅读','写作'];
+/* 「打卡构成」图例里的显示名覆盖（只影响图例，不影响任务标签） */
+const LEGEND_META = { research: {name:'复盘', icon:'👩‍🏫'} };
+
+/* ---- 每周饮品轮换（0=周日 … 6=周六）---- */
+/* ---- 分日作息 ---- */
+const PLANS = {
+  gymA: { // 周一/六/日 健身日
+    window:'09:00–17:00 · 严格 16+8',
+    steps:[
+      ['09:00','出发｜200ml 纯奶（开窗口）'],
+      ['09:20–10:50','训练 1.5 小时（器械 1–2 个）'],
+      ['11:45–12:20','洗澡返程'],
+      ['12:20','练后补给（1 全蛋 + 1 蛋白 + 苹果）'],
+      ['12:45','午饭（正常吃：主食 + 菜 + 肉，吃饱为度）'],
+      ['16:30–17:00','晚餐（鸡胸 80g + 全蛋 + 一袋奶）'],
+      ['17:00','封窗 🚫'],
+    ]},
+  restA: { // 周一/六/日 不健身日
+    window:'09:00–17:00 · 16+8',
+    steps:[
+      ['09:00','开窗口'],
+      ['三餐 + 一份加餐','午饭正常吃，晚饭按鸡胸 + 全蛋'],
+      ['17:00','封窗 🚫'],
+    ]},
+  tueWed: { // 周二/三
+    window:'09:00–18:30 · 弹性窗口',
+    steps:[
+      ['09:00','出发｜200ml 纯奶（开窗口）'],
+      ['09:20–10:50','训练 1.5 小时'],
+      ['11:45–12:20','洗澡返程'],
+      ['12:20','练后补给（1 全蛋 + 1 蛋白 + 苹果）'],
+      ['12:45–13:15','午饭（正常吃：主食 + 菜 + 肉，吃饱为度）'],
+      ['14:00–18:00','上课'],
+      ['18:05','加餐（提前 5 分钟，留出吃饭时间）'],
+      ['18:30','封窗 🚫'],
+    ]},
+  thu: { // 周四
+    window:'09:00–19:30 · 弹性窗口',
+    steps:[
+      ['09:00','一袋纯奶垫肚子（开窗口）'],
+      ['10:00–12:00','上课'],
+      ['12:30','午饭（正常吃）'],
+      ['15:30','出发｜200ml 纯奶（练前）'],
+      ['15:50–18:10','训练'],
+      ['18:10–18:50','洗澡返程'],
+      ['18:50–19:20','练后补给（1 全蛋 + 1 蛋白 + 苹果，不再额外加餐）'],
+      ['19:30','封窗 🚫'],
+    ]},
+  fri: { // 周五休息
+    window:'09:00–17:00 · 不健身日',
+    rest:true,
+    steps:[
+      ['三餐','低 GI 少油'],
+      ['加餐','可选可可粉 5g 冲奶'],
+      ['17:00','封窗 🚫（不健身日不额外延长）'],
+    ]},
+};
+function planFor(dow){ // 0=周日..6=周六
+  if(dow===2||dow===3) return {key:'tueWed', label:'健身日'};
+  if(dow===4) return {key:'thu', label:'健身日'};
+  if(dow===5) return {key:'fri', label:'休息日'};
+  return {key:'gymA', label:'健身日（如不健身按不健身日执行）', alt:'restA'};
+}
+
+const LS_KEY = 'daily-tracker-v1';
+let state = load();
+let viewMonth = new Date(); viewMonth.setDate(1);
+
+function load(){
+  try{ return upgrade(JSON.parse(localStorage.getItem(LS_KEY)) || seed()); }catch(e){ return seed(); }
+}
+/* 旧数据升级：补齐新增的学习子类、把「学习 1 小时」改成「学习 5 小时+」 */
+function upgrade(s){
+  if(!s || !s.tasks) return seed();
+  if(!s.done) s.done = {};
+  if(!s.books) s.books = [];
+  var i, t;
+  for(i = 0; i < s.tasks.length; i++){
+    t = s.tasks[i];
+    if(!t) continue;
+    if(typeof t.name === 'string' && t.name.indexOf('学习') >= 0 && t.name.indexOf('1 小时') >= 0){
+      t.name = '学习 5 小时+';
+    }
+    if(typeof t.name === 'string' && t.name.indexOf('健身') >= 0 && t.name.indexOf('30 分钟') >= 0){
+      t.name = '健身 1.5 小时';
+    }
+    /* 「研究 / 读论文」改为「阅读专著 / 文献 / 史料」 */
+    if(t.cat === 'research' && typeof t.name === 'string' && t.name.indexOf('研究') >= 0){
+      t.name = '阅读专著 / 文献 / 史料';
+      t.sub = '阅读专著/文献/史料';
+    }
+  }
+  /* 去掉爬坡 / 椭圆机 相关旧任务 */
+  var kept = [];
+  for(i = 0; i < s.tasks.length; i++){
+    t = s.tasks[i];
+    var nm = (t && typeof t.name === 'string') ? t.name : '';
+    if(nm.indexOf('爬坡') >= 0 || nm.indexOf('椭圆机') >= 0) continue;
+    kept.push(t);
+  }
+  s.tasks = kept;
+  /* 按子类去重：同一名目只保留一条，优先保留研究分类（紫色）那条 */
+  var seenSub = {}, kept2 = [], pass;
+  for(pass = 0; pass < 2; pass++){
+    for(i = 0; i < s.tasks.length; i++){
+      t = s.tasks[i];
+      if(!t) continue;
+      if(pass === 0 && t.cat !== 'research') continue;
+      if(pass === 1 && t.cat === 'research') continue;
+      if(t.sub){
+        if(seenSub[t.sub]){ continue; }
+        seenSub[t.sub] = 1;
+      }
+      kept2.push(t);
+    }
+  }
+  s.tasks = kept2;
+  var have = {};
+  for(i = 0; i < s.tasks.length; i++){
+    t = s.tasks[i];
+    if(t && t.sub) have[t.sub] = 1;
+  }
+  var names = {'雅思':'雅思', '阅读专著/文献/史料':'阅读专著 / 文献 / 史料', '申博':'申博推进', '复盘/整理笔记':'复盘 / 整理笔记'};
+  var cats  = {'雅思':'study', '阅读专著/文献/史料':'research', '申博':'study', '复盘/整理笔记':'study'};
+  var maxId = 100;
+  for(i = 0; i < s.tasks.length; i++){
+    t = s.tasks[i];
+    if(t && typeof t.id === 'number' && t.id > maxId) maxId = t.id;
+  }
+  var subs = (CATS.study && CATS.study.subs) || [];
+  for(i = 0; i < subs.length; i++){
+    if(!have[subs[i]]){
+      maxId++;
+      s.tasks.push({id: maxId, cat: (cats[subs[i]] || 'study'), name: (names[subs[i]] || subs[i]), sub: subs[i]});
+    }
+  }
+  return s;
+}
+function seed(){
+  return {
+    tasks:[
+      {id:1, cat:'fit', name:'健身 1.5 小时', sub:''},
+      {id:2, cat:'study', name:'学习 5 小时+', sub:''},
+      {id:3, cat:'research', name:'阅读专著 / 文献 / 史料', sub:'阅读专著/文献/史料'},
+      {id:4, cat:'study', name:'雅思', sub:'雅思'},
+      {id:6, cat:'study', name:'申博推进', sub:'申博'},
+      {id:7, cat:'study', name:'复盘 / 整理笔记', sub:'复盘/整理笔记'},
+    ],
+    done:{}, // 'YYYY-MM-DD': [taskId,...]
+    books:[] // {id, name, total, log:{'YYYY-MM-DD': pages}}
+  };
+}
+function save(){
+  try{ localStorage.setItem(LSK, JSON.stringify(state)); }catch(e){}
+  /* 云同步失败绝不能影响本地渲染 */
+  try{ queueSync(); }catch(e){ console.error('queueSync', e); }
+}
+function key(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+function todayKey(){ return key(new Date()); }
+
+function shiftMonth(n){ viewMonth.setMonth(viewMonth.getMonth()+n); render(); }
+
+/* ---- stats ---- */
+function monthStats(){
+  const y = viewMonth.getFullYear(), m = viewMonth.getMonth();
+  const daysInMonth = new Date(y, m+1, 0).getDate();
+  const counts = {fit:0, study:0, research:0};
+  let total = 0, activeDays = 0;
+  const now = new Date();
+  const limitDay = (y===now.getFullYear() && m===now.getMonth()) ? now.getDate() : daysInMonth;
+  for(let d=1; d<=daysInMonth; d++){
+    const arr = state.done[key(new Date(y,m,d))] || [];
+    if(arr.length) activeDays++;
+    arr.forEach(id=>{
+      const t = state.tasks.find(x=>String(x.id)===String(id).split(':')[0]);
+      if(t){ counts[t.cat]++; total++; }
+    });
+  }
+  return {counts, total, activeDays, daysInMonth, limitDay};
+}
+function streak(){
+  let s = 0; const d = new Date();
+  if(!(state.done[key(d)]||[]).length) d.setDate(d.getDate()-1);
+  while((state.done[key(d)]||[]).length){ s++; d.setDate(d.getDate()-1); }
+  return s;
+}
+
+/* ---- render ---- */
+function render(){
+  const st = monthStats();
+  document.getElementById('monthLabel').textContent =
+    viewMonth.getFullYear()+'年'+(viewMonth.getMonth()+1)+'月';
+  document.getElementById('totalCount').textContent = st.total + ' 项';
+  document.getElementById('totalMeta').textContent =
+    '共 '+st.activeDays+' 天打卡 · 日均 '+(st.activeDays? (st.total/st.activeDays).toFixed(1):'0')+' 项';
+  document.getElementById('streakNum').textContent = streak();
+
+  const expected = state.tasks.length * st.limitDay || 1;
+  const rate = Math.min(100, Math.round(st.total/expected*100));
+  document.getElementById('rateVal').textContent = rate + '%';
+  document.getElementById('rateSub').textContent = st.total + ' / ' + expected + ' 项';
+
+  renderDonut(st);
+  renderLegend(st);
+  renderTodayPlan();
+  renderToday();
+  renderWeek();
+  renderBooks();
+  renderPhdPlan();
+  renderAllPlans();
+  renderLog();
+}
+
+function renderDonut(st){
+  const svg = document.getElementById('donutSvg');
+  const r=78, cx=95, cy=95, sw=22, C=2*Math.PI*r;
+  let html = `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#eef0f5" stroke-width="${sw}"/>`;
+  if(st.total>0){
+    let offset = 0;
+    Object.keys(CATS).forEach(k=>{
+      const v = st.counts[k]; if(!v) return;
+      const frac = v/st.total;
+      html += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none"
+        stroke="${CATS[k].color}" stroke-width="${sw}"
+        stroke-dasharray="${(frac*C-3).toFixed(1)} ${C.toFixed(1)}"
+        stroke-dashoffset="${(-offset*C).toFixed(1)}"/>`;
+      offset += frac;
+    });
+  }
+  svg.innerHTML = html;
+}
+
+function renderLegend(st){
+  document.getElementById('legend').innerHTML = Object.keys(CATS).map(k=>{
+    const v = st.counts[k];
+    const pct = st.total? Math.round(v/st.total*100):0;
+    const m = LEGEND_META[k];
+    const nm = m ? m.name : CATS[k].name;
+    const ic = m ? m.icon : CATS[k].icon;
+    return `<div class="row">
+      <span class="dot" style="background:${CATS[k].color}"></span>
+      <span>${ic} ${escHtml(nm)}</span>
+      <div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${CATS[k].color}"></div></div>
+      <span class="cnt">${v} 次</span>
+      <span class="pct">${pct}%</span>
+    </div>`;
+  }).join('');
+}
+
+/* ---- 今日安排 ---- */
+function planHTML(p){
+  return `<span class="window-pill ${p.rest?'rest':''}">⏱ 进食窗口 ${p.window}</span>
+    <ul class="timeline">${p.steps.map(s=>
+      `<li><span class="tt">${s[0]}</span><span class="tc">${s[1]}</span></li>`).join('')}
+    </ul>`;
+}
+function renderTodayPlan(){
+  const dow = new Date().getDay();
+  const names = ['周日','周一','周二','周三','周四','周五','周六'];
+  const info = planFor(dow);
+  document.getElementById('planDayLabel').textContent = names[dow] + ' · ' + info.label;
+  let html = planHTML(PLANS[info.key]);
+  if(info.alt){
+    html += `<details class="plan-toggle"><summary>今天不健身？看不健身日作息</summary>
+      <div style="margin-top:8px">${planHTML(PLANS[info.alt])}</div></details>`;
+  }
+  document.getElementById('todayPlan').innerHTML = html;
+}
+function renderAllPlans(){
+  const groups = [
+    ['周一 / 周六 / 周日 · 健身日', PLANS.gymA],
+    ['周一 / 周六 / 周日 · 不健身日', PLANS.restA],
+    ['周二 / 周三', PLANS.tueWed],
+    ['周四', PLANS.thu],
+    ['周五（不健身）', PLANS.fri],
+  ];
+  document.getElementById('allPlans').innerHTML = groups.map(g=>
+    `<div class="plan-block"><div class="plan-h">${g[0]}</div>${planHTML(g[1])}</div>`).join('');
+}
+
+/* ---- today tasks ---- */
+function renderToday(){
+  const doneToday = (state.done[todayKey()] || []).map(String);
+  const now = new Date();
+  const week = ['周日','周一','周二','周三','周四','周五','周六'][now.getDay()];
+  document.getElementById('todayLabel').textContent =
+    (now.getMonth()+1)+'月'+now.getDate()+'日 '+week;
+  const el = document.getElementById('todayTasks');
+  if(!state.tasks.length){ el.innerHTML = '<div style="color:var(--sub);font-size:14px;padding:8px 0">还没有目标，点击下方按钮添加</div>'; return; }
+  el.innerHTML = state.tasks.map(t=>{
+    const on = doneToday.includes(t.id);
+    const c = CATS[t.cat] || CATS.study;
+    const m = t.sub && SUBMETA[t.sub];
+    const tIcon = m ? m.icon : c.icon;
+    const tColor = m ? m.color : c.color;
+    let h = `<div class="task">
+      <div class="check ${on?'on':''}" style="${on?'background:'+tColor:''}" onclick="toggle('${t.id}')">${on?'✓':''}</div>
+      <span class="name ${on?'done':''}">${escHtml(t.name)}</span>
+      <span class="tag" style="color:${tColor};background:${tColor}18">${tIcon} ${escHtml(t.sub||c.name)}</span>
+      <button class="del" onclick="delTask('${t.id}')">×</button>
+    </div>`;
+    /* 雅思：展开单词/听力/口语/阅读/写作小勾选 */
+    if(t.sub === '雅思'){
+      h += `<div class="subchecks">` + IELTS_SUBS.map((s2, i2)=>{
+        const sid = t.id + ':' + i2;
+        const on2 = doneToday.indexOf(sid) >= 0;
+        return `<span class="subcheck ${on2?'on':''}" onclick="toggle('${sid}')">${on2?'✓ ':''}${s2}</span>`;
+      }).join('') + `</div>`;
+    }
+    return h;
+  }).join('');
+}
+
+/* ---- week chart ---- */
+function renderWeek(){
+  const el = document.getElementById('weekChart');
+  const names = ['日','一','二','三','四','五','六'];
+  const days = [];
+  for(let i=6;i>=0;i--){ const d=new Date(); d.setDate(d.getDate()-i); days.push(d); }
+  const data = days.map(d=>{
+    const arr = state.done[key(d)] || [];
+    const per = {fit:0,study:0,research:0};
+    arr.forEach(id=>{const t=state.tasks.find(x=>String(x.id)===String(id).split(':')[0]); if(t) per[t.cat]++;});
+    return {d, per, total:arr.length};
+  });
+  const max = Math.max(1, ...data.map(x=>x.total));
+  const tk = todayKey();
+  el.innerHTML = data.map(x=>{
+    const segs = Object.keys(CATS).map(c=>{
+      const h = Math.round(x.per[c]/max*72);
+      return h>0? `<i style="height:${h}px;background:${CATS[c].color}"></i>`:'';
+    }).join('');
+    const isToday = key(x.d)===tk;
+    return `<div class="wcol">
+      <span class="wnum">${x.total||''}</span>
+      <div class="wstack" style="height:72px">${segs}</div>
+      <span class="wday ${isToday?'today':''}">${isToday?'今天':names[x.d.getDay()]}</span>
+    </div>`;
+  }).join('');
+  const weekTotal = data.reduce((s,x)=>s+x.total,0);
+  const activeDays = data.filter(x=>x.total>0).length;
+  document.getElementById('weekSummary').textContent = `近 7 天共完成 ${weekTotal} 项 · ${activeDays} 天有打卡`;
+}
+
+/* ---- reading plan ---- */
+function bookRead(b){ return Object.values(b.log||{}).reduce((s,n)=>s+n,0); }
+function renderBooks(){
+  state.books = state.books || [];
+  const el = document.getElementById('bookList');
+  const reading = state.books.filter(b=>bookRead(b)<b.total);
+  document.getElementById('readingSub').textContent =
+    state.books.length? `在读 ${reading.length} 本 · 读完 ${state.books.length-reading.length} 本` : '';
+  if(!state.books.length){
+    el.innerHTML = '<div style="color:var(--sub);font-size:14px;padding:8px 0">还没有阅读计划，添加一本书开始吧</div>';
+    return;
+  }
+  el.innerHTML = state.books.map(b=>{
+    const read = Math.min(bookRead(b), b.total);
+    const pct = Math.round(read/b.total*100);
+    const left = b.total - read;
+    let speed=0;
+    for(let i=0;i<7;i++){ const d=new Date(); d.setDate(d.getDate()-i); speed += (b.log&&b.log[key(d)])||0; }
+    speed = speed/7;
+    let eta;
+    if(left<=0) eta = '✅ 已读完';
+    else if(speed>0){
+      const d = new Date(); d.setDate(d.getDate()+Math.ceil(left/speed));
+      eta = `按当前速度约 ${d.getMonth()+1}月${d.getDate()}日 读完`;
+    } else eta = `还剩 ${left} 页`;
+    return `<div class="book">
+      <div class="btop">
+        <span class="bname">📖 ${escHtml(b.name)}</span>
+        <span class="bpages">${read} / ${b.total} 页</span>
+        <button class="del" onclick="delBook(${b.id})">×</button>
+      </div>
+      <div class="btrack"><div class="bfill" style="width:${pct}%"></div></div>
+      <div class="bmeta">
+        <span>${pct}% · ${eta}</span>
+        ${left>0? `<span class="blog">
+          <button onclick="logPages(${b.id},10)">+10页</button>
+          <button onclick="logPages(${b.id})">记一笔</button>
+        </span>`:''}
+      </div>
+    </div>`;
+  }).join('');
+}
+function addBook(){
+  askInput('书名：', '', function(name){
+    if(!name || !name.trim()) return;
+    askInput('总页数：', '300', function(t){
+      var total = parseInt(t, 10);
+      if(!total || total <= 0) return;
+      state.books = state.books || [];
+      state.books.push({ id: Date.now(), name: name.trim(), total: total, log: {} });
+      save(); render(); toast('已添加《' + name.trim() + '》');
+    });
+  });
+}
+function logPages(id, n){
+  var b = (state.books||[]).filter(function(x){ return x.id===id; })[0];
+  if(!b) return;
+  function commit(v){
+    var p = parseInt(v, 10);
+    if(!p || p <= 0) return;
+    b.log = b.log || {};
+    var k = todayKey();
+    b.log[k] = (b.log[k]||0) + p;
+    save(); render(); toast('已记录 ' + p + ' 页');
+  }
+  if(n===undefined){ askInput('今天读了多少页？', '20', commit); }
+  else { commit(n); }
+}
+function delBook(id){
+  askConfirm('删除这本书的阅读计划？', function(){
+    state.books = state.books.filter(function(x){ return x.id!==id; });
+    save(); render(); toast('已删除');
+  });
+}
+
+/* ---- log ---- */
+function renderLog(){
+  const y = viewMonth.getFullYear(), m = viewMonth.getMonth();
+  const daysInMonth = new Date(y, m+1, 0).getDate();
+  const week = ['周日','周一','周二','周三','周四','周五','周六'];
+  let rows = [];
+  for(let d=daysInMonth; d>=1; d--){
+    const date = new Date(y,m,d);
+    const arr = state.done[key(date)] || [];
+    if(!arr.length) continue;
+    const cats = [...new Set(arr.map(id=>{const t=state.tasks.find(x=>String(x.id)===String(id).split(':')[0]);return t?t.cat:null}).filter(Boolean))];
+    rows.push(`<div class="daylog">
+      <span class="d">${m+1}月${d}日<small>${week[date.getDay()]}</small></span>
+      <span class="badges">${cats.map(c=>`<i style="background:${CATS[c].color}"></i>`).join('')}</span>
+      <span class="s">${arr.length} 项完成</span>
+    </div>`);
+  }
+  document.getElementById('dayLog').innerHTML =
+    rows.length? rows.join('') : '<div style="color:var(--sub);font-size:14px;padding:8px 0">本月还没有打卡记录</div>';
+}
+
+/* ---- actions ---- */
+function toggle(id){
+  id = String(id);
+  const k = todayKey();
+  const arr = state.done[k] || (state.done[k]=[]);
+  const i = arr.map(String).indexOf(id);
+  if(i>=0) arr.splice(i,1); else arr.push(id);
+  if(!arr.length) delete state.done[k];
+  save(); render();
+  if(navigator.vibrate) navigator.vibrate(10);
+}
+function delTask(id){
+  askConfirm('删除这个目标？历史打卡记录会保留统计。', function(){
+    state.tasks = state.tasks.filter(function(x){ return String(x.id)!==String(id); });
+    save(); render(); toast('已删除');
+  });
+}
+let selCat = 'fit';
+let selSub = '';
+function renderSubPicker(){
+  var box = document.getElementById('subPicker');
+  if(!box) return;
+  var subs = (CATS[selCat] && CATS[selCat].subs) || [];
+  if(!subs.length){ box.hidden = true; box.innerHTML = ''; selSub = ''; return; }
+  box.hidden = false;
+  box.innerHTML = subs.map(function(s){
+    return '<button type="button" class="cat' + (s === selSub ? ' sel' : '') + '" data-sub="' + s + '">' + s + '</button>';
+  }).join('');
+}
+document.getElementById('catPicker').addEventListener('click', e=>{
+  const b = e.target.closest('.cat'); if(!b) return;
+  document.querySelectorAll('#catPicker .cat').forEach(x=>x.classList.remove('sel'));
+  b.classList.add('sel'); selCat = b.dataset.cat; selSub = '';
+  renderSubPicker();
+});
+document.getElementById('subPicker').addEventListener('click', e=>{
+  const b = e.target.closest('.cat'); if(!b) return;
+  document.querySelectorAll('#subPicker .cat').forEach(x=>x.classList.remove('sel'));
+  b.classList.add('sel'); selSub = b.dataset.sub;
+});
+renderSubPicker();
+function openSheet(){ document.getElementById('mask').classList.add('show'); setTimeout(()=>document.getElementById('taskInput').focus(),200); }
+function closeSheet(){ document.getElementById('mask').classList.remove('show'); }
+function addTask(){
+  const name = document.getElementById('taskInput').value.trim();
+  if(!name) return;
+  state.tasks.push({id:Date.now(), cat:selCat, name, sub: selSub || ''});
+  document.getElementById('taskInput').value='';
+  try{ localStorage.removeItem(INPUT_CACHE); }catch(e){}
+  selSub = ''; renderSubPicker();
+  save(); closeSheet(); render();
+}
+
+/* ---- data io ---- */
+function exportData(){
+  const blob = new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'daily-tracker-backup-'+todayKey()+'.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+function importData(ev){
+  const f = ev.target.files[0]; if(!f) return;
+  const r = new FileReader();
+  r.onload = ()=>{
+    try{
+      const data = JSON.parse(r.result);
+      if(!data.tasks || !data.done) throw 0;
+      state = data; save(); render();
+      toast('导入成功！');
+    }catch(e){ toast('文件格式不对，导入失败'); }
+    ev.target.value = '';
+  };
+  r.readAsText(f);
+}
+
+
+/* ---- 页内弹层：替代被 iframe 沙箱禁用的 prompt / confirm / alert ---- */
+(function(){
+  var css = document.createElement('style');
+  css.textContent =
+    '.sp-toast{position:fixed;left:50%;bottom:32px;transform:translate(-50%,12px);' +
+    'z-index:10000;padding:10px 18px;border-radius:10px;background:rgba(26,29,38,.92);' +
+    'color:#fff;font-size:13px;opacity:0;pointer-events:none;' +
+    'transition:opacity .22s,transform .22s}' +
+    '.sp-toast.show{opacity:1;transform:translate(-50%,0)}' +
+    '#spModal{background:rgba(0,0,0,.4)}' +
+    '#spModal .sheet{pointer-events:auto}' +
+    '#spModal .modal-btns{display:flex;gap:10px;margin-top:14px}' +
+    '#spModal .modal-btns button{flex:1}';
+  document.head.appendChild(css);
+})();
+
+var _spModalEl = null;
+function spModal(){
+  if(_spModalEl) return _spModalEl;
+  var m = document.createElement('div');
+  m.className = 'mask';
+  m.id = 'spModal';
+  m.innerHTML =
+    '<div class="sheet">' +
+      '<h3 id="spModalTitle"></h3>' +
+      '<input type="text" id="spModalInput" maxlength="40">' +
+      '<div class="modal-btns">' +
+        '<button class="btn-ghost" id="spModalCancel" type="button">取消</button>' +
+        '<button class="btn-primary" id="spModalOk" type="button">确定</button>' +
+      '</div>' +
+    '</div>';
+  document.body.appendChild(m);
+  _spModalEl = m;
+  var inp = m.querySelector('#spModalInput');
+  var btnO = m.querySelector('#spModalOk');
+  var btnC = m.querySelector('#spModalCancel');
+  btnC.addEventListener('click', function(){ m.classList.remove('show'); });
+  btnO.addEventListener('click', function(){
+    var v = inp.value;
+    m.classList.remove('show');
+    if(m._cb){ var c = m._cb; m._cb = null; c(v); }
+  });
+  inp.addEventListener('keydown', function(e){
+    if(e.key === 'Enter'){ e.preventDefault(); btnO.click(); }
+  });
+  return m;
+}
+
+function askInput(title, defVal, cb){
+  var m = spModal();
+  m.querySelector('#spModalTitle').textContent = title;
+  var inp = m.querySelector('#spModalInput');
+  inp.style.display = '';
+  inp.value = defVal || '';
+  m._cb = cb;
+  m.classList.add('show');
+  setTimeout(function(){ inp.focus(); inp.select(); }, 200);
+}
+
+function askConfirm(title, cb){
+  var m = spModal();
+  m.querySelector('#spModalTitle').textContent = title;
+  var inp = m.querySelector('#spModalInput');
+  inp.style.display = 'none';
+  m._cb = function(){ inp.style.display = ''; cb(); };
+  m.classList.add('show');
+}
+
+function toast(msg){
+  var t = document.getElementById('spToast');
+  if(!t){
+    t = document.createElement('div');
+    t.id = 'spToast';
+    t.className = 'sp-toast';
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._timer);
+  t._timer = setTimeout(function(){ if(t) t.classList.remove('show'); }, 2400);
+}
+
+/* ================== 云端同步层（跨设备） ================== */
+/* 三张在线表的 ID 直接硬编码在下面每一次调用里 */
+var CAT2OPT = { fit:'B6LgQ_WwxCNHepJO', study:'9K0_MSTvasoGSHK3', research:'JBDvwljCGMZCe0ly' };
+var OPT2CAT = { 'B6LgQ_WwxCNHepJO':'fit', '9K0_MSTvasoGSHK3':'study', 'JBDvwljCGMZCe0ly':'research' };
+var LSK = 'daily-tracker-v1';
+var INPUT_CACHE = 'sp_form_' + location.pathname + '_task';
+
+var db = (function(){
+  try { return (window.__SMART_PAGE__ && window.__SMART_PAGE__.database) || null; }
+  catch(e){ return null; }
+})();
+
+function rowId(r){ return r && (r._id || r.record_id || r.id); }
+function dayOf(v){ return String(v || '').slice(0,10); }
+function num(v){ var n = parseFloat(v); return isNaN(n) ? 0 : n; }
+
+/* 用户 / 数据库文本进入 DOM 前先转义，避免 XSS */
+function escHtml(v){
+  var s = String(v == null ? '' : v), out = '', c, i;
+  for (i = 0; i < s.length; i++){
+    c = s.charAt(i);
+    if (c === '&') { out += '&amp;'; }
+    else if (c === '<') { out += '&lt;'; }
+    else if (c === '>') { out += '&gt;'; }
+    else if (c === '"') { out += '&quot;'; }
+    else if (c === "'") { out += '&#39;'; }
+    else { out += c; }
+  }
+  return out;
+}
+
+/* 分页拉全量：单次 query 只返回一页，必须靠 hasMore/nextCursor 循环翻页 */
+function pullTasks(startCursor, acc, guard){
+  acc = acc || []; guard = guard || 0;
+  if(!db) return Promise.reject(new Error('SDK 不可用'));
+  if(guard > 100) return Promise.resolve(acc);
+  return db.query({ databaseId: 'qykB4g6O1RCuvwQiEBbQ4e', pageSize: 200, startCursor: startCursor })
+    .then(function(r){
+      acc = acc.concat(r.results || []);
+      var next = r.nextCursor;
+      if(r.hasMore && next && next !== startCursor && (r.results || []).length){
+        return pullTasks(next, acc, guard + 1);
+      }
+      return acc;
+    }).catch(function(err){
+      console.error('[database] 查询失败:', err);
+      return acc;
+    });
+}
+function pullCheckins(startCursor, acc, guard){
+  acc = acc || []; guard = guard || 0;
+  if(!db) return Promise.reject(new Error('SDK 不可用'));
+  if(guard > 100) return Promise.resolve(acc);
+  return db.query({ databaseId: 'RaxQSifIYonCyazsSI1M3t', pageSize: 200, startCursor: startCursor })
+    .then(function(r){
+      acc = acc.concat(r.results || []);
+      var next = r.nextCursor;
+      if(r.hasMore && next && next !== startCursor && (r.results || []).length){
+        return pullCheckins(next, acc, guard + 1);
+      }
+      return acc;
+    }).catch(function(err){
+      console.error('[database] 查询失败:', err);
+      return acc;
+    });
+}
+function pullReads(startCursor, acc, guard){
+  acc = acc || []; guard = guard || 0;
+  if(!db) return Promise.reject(new Error('SDK 不可用'));
+  if(guard > 100) return Promise.resolve(acc);
+  return db.query({ databaseId: 'KiWpbL1Nehh09kIlSzlTqv', pageSize: 200, startCursor: startCursor })
+    .then(function(r){
+      acc = acc.concat(r.results || []);
+      var next = r.nextCursor;
+      if(r.hasMore && next && next !== startCursor && (r.results || []).length){
+        return pullReads(next, acc, guard + 1);
+      }
+      return acc;
+    }).catch(function(err){
+      console.error('[database] 查询失败:', err);
+      return acc;
+    });
+}
+
+/* 把云端三张表拼成页面内部使用的 state */
+function buildState(rowsTask, rowsCheckin, rowsRead){
+  var tasks = [];
+  (rowsTask || []).forEach(function(r){
+    var tid = parseInt(r['任务ID'], 10);
+    var nm = r['任务名称'];
+    if(!tid || !nm) return;
+    tasks.push({ id: tid, cat: OPT2CAT[r['分类']] || 'fit', name: nm, sub: r['子类'] || '' });
+  });
+
+  var done = {};
+  (rowsCheckin || []).forEach(function(r){
+    var d = dayOf(r['日期']);
+    var tid = String(r['任务ID'] || '').trim();
+    if(!d || !tid) return;
+    if(!done[d]) done[d] = [];
+    if(done[d].indexOf(tid) === -1) done[d].push(tid);
+  });
+
+  var order = [], map = {};
+  (rowsRead || []).forEach(function(r){
+    var nm = r['书名'];
+    if(!nm) return;
+    if(!map[nm]){
+      map[nm] = { id: order.length + 1, name: nm, total: num(r['总页数']), log: {} };
+      order.push(nm);
+    }
+    if(num(r['总页数'])) map[nm].total = num(r['总页数']);
+    var d = dayOf(r['阅读日期']);
+    if(d) map[nm].log[d] = (map[nm].log[d] || 0) + num(r['当日页数']);
+  });
+
+  return { tasks: tasks, done: done, books: order.map(function(n){ return map[n]; }) };
+}
+
+function cloudPull(){
+  if(!db) return Promise.resolve(null);
+  try{
+    return Promise.all([ pullTasks(), pullCheckins(), pullReads() ])
+      .then(function(res){ return upgrade(buildState(res[0], res[1], res[2])); });
+  }catch(e){ return Promise.reject(e); }
+}
+
+/* 串行执行写操作，避免突发请求撞 QPS */
+function runOps(ops){
+  var i = 0;
+  function fail(e){ console.error('[database] 操作失败:', e); return next(); }
+  function next(){
+    if(!db || i >= ops.length) return Promise.resolve();
+    var op = ops[i++];
+    try{
+      if(op.kind === 'addTask')    return db.addRecord({ databaseId: 'qykB4g6O1RCuvwQiEBbQ4e', properties: op.props }).then(next, fail);
+      if(op.kind === 'addCheckin') return db.addRecord({ databaseId: 'RaxQSifIYonCyazsSI1M3t', properties: op.props }).then(next, fail);
+      if(op.kind === 'addRead')    return db.addRecord({ databaseId: 'KiWpbL1Nehh09kIlSzlTqv', properties: op.props }).then(next, fail);
+      if(op.kind === 'updTask')    return db.updateRecord({ databaseId: 'qykB4g6O1RCuvwQiEBbQ4e', recordId: op.rid, properties: op.props }).then(next, fail);
+      if(op.kind === 'delTask')    return db.deleteRecord({ databaseId: 'qykB4g6O1RCuvwQiEBbQ4e', recordId: op.rid }).then(next, fail);
+      if(op.kind === 'delCheckin') return db.deleteRecord({ databaseId: 'RaxQSifIYonCyazsSI1M3t', recordId: op.rid }).then(next, fail);
+      if(op.kind === 'delRead')    return db.deleteRecord({ databaseId: 'KiWpbL1Nehh09kIlSzlTqv', recordId: op.rid }).then(next, fail);
+    }catch(e){ return fail(e); }
+    return next();
+  }
+  return next();
+}
+
+/* 全量 diff：把内存里的 state 对账到云端三张表 */
+function syncCloud(){
+  if(!db || _syncing) return Promise.resolve();
+  _syncing = true;
+  return Promise.all([ pullTasks(), pullCheckins(), pullReads() ])
+    .then(function(res){
+      var rowsTask = res[0] || [], rowsCheckin = res[1] || [], rowsRead = res[2] || [];
+      var ops = [];
+      var wantT = {}, haveT = {}, wantC = {}, haveC = {}, wantR = {}, haveR = {};
+      var tid, rid, d, k, w, nm, j;
+
+      /* ---- 任务清单 ---- */
+      state.tasks.forEach(function(t){ wantT[String(t.id)] = t; });
+      rowsTask.forEach(function(r){
+        tid = String(r['任务ID'] || ''); rid = rowId(r);
+        if(wantT[tid]){
+          haveT[tid] = r;
+          w = CAT2OPT[wantT[tid].cat] || CAT2OPT.fit;
+          if(r['任务名称'] !== wantT[tid].name || r['分类'] !== w){
+            ops.push({kind:'updTask', rid:rid,
+              props:{ '任务名称':{text:wantT[tid].name},
+                      '分类':{select:w},
+                      '子类':{text:wantT[tid].sub || ''} }});
+          }
+        } else if(rid){ ops.push({kind:'delTask', rid:rid}); }
+      });
+      Object.keys(wantT).forEach(function(tid){
+        if(!haveT[tid]){
+          ops.push({kind:'addTask',
+            props:{ '任务名称':{text:wantT[tid].name},
+                    '分类':{select:CAT2OPT[wantT[tid].cat] || CAT2OPT.fit},
+                    '任务ID':{text:tid},
+                    '子类':{text:wantT[tid].sub || ''} }});
+        }
+      });
+
+      /* ---- 打卡记录 ---- */
+      Object.keys(state.done || {}).forEach(function(dd){
+        (state.done[dd] || []).forEach(function(id){ wantC[dd + '|' + id] = { date:dd, tid:String(id) }; });
+      });
+      rowsCheckin.forEach(function(r){
+        d = dayOf(r['日期']); tid = String(r['任务ID'] || ''); k = d + '|' + tid; rid = rowId(r);
+        if(wantC[k]){ haveC[k] = r; }
+        else if(rid){ ops.push({kind:'delCheckin', rid:rid}); }
+      });
+      Object.keys(wantC).forEach(function(k){
+        if(!haveC[k]){
+          nm = '';
+          for(j=0;j<state.tasks.length;j++){
+            if(String(state.tasks[j].id) === wantC[k].tid){ nm = state.tasks[j].name; break; }
+          }
+          ops.push({kind:'addCheckin',
+            props:{ '日期':{date:wantC[k].date}, '任务ID':{text:wantC[k].tid}, '任务名称':{text:nm} }});
+        }
+      });
+
+      /* ---- 阅读记录 ---- */
+      (state.books || []).forEach(function(b){
+        var keys = Object.keys(b.log || {});
+        if(!keys.length){ wantR[b.name + '|'] = { name:b.name, date:'', pages:0, total:b.total }; return; }
+        keys.forEach(function(dd){
+          wantR[b.name + '|' + dd] = { name:b.name, date:dd, pages:b.log[dd], total:b.total };
+      });
+      });
+      rowsRead.forEach(function(r){
+        nm = String(r['书名'] || ''); d = dayOf(r['阅读日期']); k = nm + '|' + d; rid = rowId(r); w = wantR[k];
+        if(w && num(r['当日页数']) === w.pages && num(r['总页数']) === w.total){ haveR[k] = r; }
+        else if(rid){ ops.push({kind:'delRead', rid:rid}); }
+      });
+      Object.keys(wantR).forEach(function(k){
+        if(!haveR[k]){
+          w = wantR[k];
+          ops.push({kind:'addRead',
+            props:{ '书名':{text:w.name}, '总页数':{number:w.total},
+                    '阅读日期':{date:w.date}, '当日页数':{number:w.pages} }});
+        }
+      });
+
+      return runOps(ops);
+    })
+    .then(function(){ _syncing = false; })
+    .catch(function(err){
+      _syncing = false;
+      console.error('[database] 同步失败:', err);
+      setSyncState('云端保存失败，数据暂存在本机', 'error');
+    });
+}
+
+/* 防抖触发云同步：连续操作只同步一次，且失败不外抛 */
+var _syncTimer = null;
+function queueSync(){
+  if(!db) return;
+  if(_syncTimer) clearTimeout(_syncTimer);
+  _syncTimer = setTimeout(function(){
+    _syncTimer = null;
+    try{
+      var p = syncCloud();
+      if(p && p.catch) p.catch(function(e){ console.error('[database] syncCloud:', e); });
+    }catch(e){ console.error('[database] syncCloud:', e); }
+  }, 300);
+}
+
+/* 表单输入本地缓存：避免登录跳转后已输入内容丢失 */
+var _ti = document.getElementById('taskInput');
+var _it = null;
+var _saveInput = function(){
+  if(_it) clearTimeout(_it);
+  _it = setTimeout(function(){
+    try{ localStorage.setItem(INPUT_CACHE, _ti.value); }catch(e){}
+  }, 300);
+};
+var _clearInput = function(){
+  try{ localStorage.removeItem(INPUT_CACHE); }catch(e){}
+};
+try{
+  var _cv = localStorage.getItem(INPUT_CACHE);
+  if(_ti && _cv) _ti.value = _cv;
+}catch(e){}
+if(_ti){
+  _ti.addEventListener('input', _saveInput);
+  _ti.addEventListener('change', _saveInput);
+}
+
+/* 同步状态提示：让用户看得见数据来自云端还是本机 */
+function setSyncState(text, kind){
+  var el = document.getElementById('syncTip');
+  if(!el){
+    el = document.createElement('div');
+    el.id = 'syncTip';
+    el.setAttribute('data-sp-bindable', 'database');
+    el.style.cssText = 'position:fixed;left:0;right:0;top:0;z-index:9999;padding:6px 12px;font-size:12px;text-align:center;';
+    if(document.body){ document.body.appendChild(el); }
+  }
+  el.textContent = text;
+  if(kind === 'error'){
+    el.style.background = '#fee2e2'; el.style.color = '#991b1b'; el.style.display = 'block';
+  } else if(kind === 'ok'){
+    el.style.background = '#dcfce7'; el.style.color = '#166534'; el.style.display = 'block';
+    setTimeout(function(){ if(el && el.textContent === text){ el.style.display = 'none'; } }, 1800);
+  } else {
+    el.style.background = '#e0e7ff'; el.style.color = '#3730a3'; el.style.display = 'block';
+  }
+}
+
+
+/* ================== 申博计划（港澳三年） ================== */
+var PHD_OVERVIEW = [
+  {term:'研一上', time:'2026.9-2027.1', stage:'基础打底',
+   task:'北魏史入门 +《魏书》精读 + 祭天礼制基础 + 专业英语 + Historical GIS 入门 + 确定研究方向',
+   ielts:'词汇+听力入门（备考前置）；CET-4 起步', apply:'了解导师方向，阅读入门文献'},
+  {term:'研一下', time:'2027.2-2027.7', stage:'能力深化',
+   task:'《魏书·礼志》《北史》精读 + 田野调查、GIS 实操 + 平城考古互证 + 课程论文',
+   ielts:'★CET-4 通过（内大毕业线）；雅思强化备考（首考延至研二上）', apply:'确定 3-5 位目标导师，开始读其论文'},
+  {term:'研二上', time:'2027.9-2028.1', stage:'科研冲刺',
+   task:'核心论文投稿 + RP 框架 + 套磁准备 + 学术会议 + 雅思首考 + CET-6 备考',
+   ielts:'★CET-6 通过（内大毕业线）；★雅思首考（目标 6.5，单项≥6.0）', apply:'RP 初稿完成，套磁信草稿，确认推荐信人'},
+  {term:'研二下', time:'2028.2-2028.7', stage:'申请准备',
+   task:'RP 终稿 + 套磁发送 + 面试模拟 + 申请材料 + 硕士开题',
+   ielts:'★雅思冲 7/7.5（首考 6.5 则提分；成绩锁定覆盖 2028 秋申请）', apply:'★6-9 月套磁黄金期，RP 终稿，CV/PS 定稿'},
+  {term:'研三上', time:'2028.9-2029.1', stage:'申请季',
+   task:'HKPFS + 网申 + 面试 + offer + 硕士论文',
+   ielts:'—', apply:'★9 月 HKPFS 开放；★12 月 1 日 HKPFS 截止；1-4 月面试'},
+  {term:'研三下', time:'2029.2-2029.7', stage:'毕业入学',
+   task:'硕士论文答辩 + 博士入学准备 + 研究启动',
+   ielts:'—', apply:'★3-6 月 offer 确认；★9 月博士入学'}
+];
+
+var PHD_DEADLINES = [
+  {name:'HKPFS RGC 申请', time:'2028年9月1日开放 → 12月1日香港时间中午12:00截止', note:'错过即失去 HKPFS 资格', level:'极高'},
+  {name:'HKPFS 院校申请', time:'2028年9月 → 12月1日 23:59 截止', note:'需先拿到 RGC reference number', level:'极高'},
+  {name:'套磁黄金期', time:'2028年6-9月（研二暑假至研三开学）', note:'10 月后导师邮箱爆满，回复率骤降', level:'高'},
+  {name:'雅思成绩有效期', time:'考试日期起 2 年', note:'2027 年考的成绩到 2029 年申请有效', level:'中'},
+  {name:'港大文学院雅思', time:'总分 7.0，单项不低于 6.0', note:'比其他学院高 0.5', level:'高'},
+  {name:'港中文/港城大雅思', time:'总分 6.5', note:'建议刷到 7.0 增加竞争力', level:'中'}
+];
+
+var PHD_SUPERVISORS = [
+  {n:'谢伟杰 TSE Wai Kit Wicky', s:'香港中文大学', d:'秦汉魏晋南北朝军事与社会史、暴力史、边界形成', m:'★★★★☆', p:'第一优先级'},
+  {n:'林永昌 Lam Wengcheong', s:'香港中文大学', d:'秦汉及商周考古、冶金学、动物考古学、考古 GIS 应用', m:'★★★★☆', p:'第一优先级'},
+  {n:'裴卿 PEI Qing', s:'香港理工大学', d:'历史地理、历史气候与社会、数字人文、历史 GIS', m:'★★★★☆', p:'第一优先级'},
+  {n:'陈钰琪 CHEN Yuqi', s:'香港大学', d:'量化历史与考古、空间分析、历史文本地理编码', m:'★★★★☆', p:'第二优先级'},
+  {n:'黎明釗 LAI Ming Chiu', s:'香港中文大学', d:'秦汉及魏晋政治与社会史、简牍、汉代碑刻、礼制与祭祀', m:'★★★☆☆', p:'第二优先级'},
+  {n:'张晓宇 CHEUNG Hiu Yu', s:'香港中文大学', d:'道学形成史、皇家礼仪史、礼学与礼典研究', m:'★★★☆☆', p:'第二优先级'}
+];
+
+var PHD_TERMS = ["研一上", "研一下", "研二上", "研二下", "研三上", "研三下"];
+var PHD_WEEKS = [
+[['9月','雅思词汇List1-7（每天50词）；听力入门：剑桥17 Test1 Section1-2精听','入学教育；课程注册；选课确认；导师见面','《魏书·太祖本纪上》；康乐《从西郊到南郊》导论+第1章；田余庆《拓跋史探》前言+第1篇','了解港澳高校历史PhD申请基本要求；注册雅思官网账号；下载雅思备考资料'],['9月','词汇List8-14；听力：剑桥17 Test2 Section1-2；口语Part1练习（自我介绍/学习）','课程学习；完成课程阅读作业；课堂发言','《魏书·太祖本纪下》；康乐第2章（代人集团）；《拓跋史探》第2篇','浏览目标导师（谢伟杰、林永昌、裴卿）个人主页，下载其代表论文3篇'],['9月','词汇List15-21；听力：剑桥17 Test3；阅读：剑桥17 Test1 Passage1（精读）','课程论文选题初步；参加学术讲座1场','《魏书·太宗本纪》；康乐第3章（部落大会与四月祭天）；《拓跋史探》第3篇','阅读张晓宇教授论文1篇（中古礼制方向），做笔记（研究方法、史料运用、核心论点）'],['10月','词汇List22-28；听力：剑桥17 Test4；阅读：Test1 Passage2-3；写作Task1图表入门','课程作业提交；课堂讨论准备','《魏书·世祖本纪上》；康乐第4章（北魏国家的建立）；王仲荦《魏晋南北朝史》第1-2章','阅读李怡文教授论文1篇（中古物质文化方向），做笔记'],['10月','词汇List29-35；听力：剑桥16 Test1；阅读：Test2 Passage1；写作Task1练习1篇','课程中期汇报准备；参加学术讲座','《魏书·世祖本纪下》；康乐第5章（西郊祭天专题）；《拓跋史探》第4篇','整理已读导师论文笔记，提炼3位导师的研究方法共性与差异'],['10月','词汇List36-42；听力：剑桥16 Test2；阅读：Test2 Passage2-3；口语Part2练习（描述一个历史建筑）','课程作业；中期复习','《魏书·礼志一》（上）；康乐第6章（西郊祭典细读）；写200字方向说明','确定初步研究方向：北魏祭天礼制与拓跋政治文化；写200字方向说明'],['10月','词汇List43-49；听力：剑桥16 Test3；阅读：Test3 Passage1；写作Task2议论文入门（教育类）','课程论文大纲提交；参加讲座','《魏书·礼志一》（下）；康乐第7章（文明太后与礼制改革）；《拓跋史探》第5篇','搜索北魏祭天研究文献（西郊祭天、圜丘、明堂、阴山却霜等关键词），建立Excel文献清单'],['11月','词汇List50-56；听力：剑桥16 Test4；阅读：Test3 Passage2-3；写作Task2练习1篇','课程论文初稿；课堂发言','《魏书·礼志二》；康乐第8章（孝文帝礼制改革）；《拓跋史探》第6篇','文献清单完善：按史料、礼制研究、北魏政治、平城考古四类分类，标注来源与可获取性'],['11月','词汇List57-63；听力：剑桥15 Test1；阅读：Test4 Passage1；口语Part2练习（描述一次参观）','课程论文修改；参加学术讲座','《隋书·礼仪志》卷一（郊祀部分）；康乐读完；《拓跋史探》第7篇','阅读林永昌教授论文1篇（考古+GIS方向），了解空间分析方法在礼制建筑研究中的应用'],['11月','词汇List64-70；听力：剑桥15 Test2；阅读：Test4 Passage2-3；写作Task1+Task2各1篇','课程论文终稿提交','《通典·礼》郊天部分节选；赵永磊《争膺天命》论文；《拓跋史探》第8篇','雅思系统备考启动；确认研二上首考档期（2027秋）'],['11月','词汇复习List1-35；听力：剑桥15 Test3；阅读：剑桥15 Test1 Passage1-2；口语Part3练习','期末复习开始；课程结课论文','《北史·魏本纪》与《魏书》对照；康乐书笔记整理；《拓跋史探》读完','整理研一上读书笔记，建立文献管理库（Zotero），导入已读论文和书目'],['12月','词汇复习List36-70；听力：剑桥15 Test4；阅读：Test1 Passage3；写作Task2练习（文化类）','期末复习；课程考试','《水经注·㶟水》篇；李凭《北魏平城时代》第1-2章；《中国礼制史》郊祀章节','Zotero文献分类：北魏史料、祭天礼制、政治制度、平城考古、史学理论、目标导师论文'],['12月','听力模考：剑桥15 Test1全套；阅读模考：Test2全套；写作模考：Task1+Task2','期末考试周','《魏书·高祖本纪上》；《北魏平城时代》第3-4章；《中国礼制史·魏晋南北朝卷》相关章节','寒假计划制定：确定寒假阅读书目（《礼志》精读+康乐+北魏祭天英文文献）'],['12月','听力模考：剑桥14 Test1；阅读模考：Test3；口语模考：Part1-3全套','期末考试；课程总结','《魏书·高祖本纪下》；《北魏平城时代》第5-6章；平城明堂遗址考古资料','寒假田野调查准备：如可能，联系大同文物部门，规划北魏明堂遗址、方山永固陵考察'],['1月','寒假·雅思：词汇总复习；听力每天30分钟；阅读每天1篇；写作每周2篇','寒假·课程：无','寒假精读：《魏书·礼志》全文笔记整理；《北魏平城时代》读完；北魏祭天英文文献5篇','寒假阅读：英文文献（北魏郊祀、礼制研究英文论文）；写礼志读书札记2000字'],['1月','寒假·雅思：剑桥14 Test2全套模考；错题分析','寒假','《北魏平城京郊的礼制性建筑与祭祀活动》（论文）；明堂遗址发掘简报；云冈石窟与北魏祭祀资料','北魏祭天遗址实地考察（如可行）：大同明堂遗址、方山永固陵、云冈石窟'],['1月','寒假·雅思：剑桥14 Test3全套；口语练习每天15分钟','寒假','坝顶祭天遗址发掘简报（内蒙古武川）；付鑫洋、崔思朋论文；《通典》明堂部分','整理田野考察资料：照片分类、遗址平面图收集、考察笔记电子化'],['1月','寒假·雅思：剑桥14 Test4全套；写作Task2修改3篇；寒假总结','寒假总结；研一下选课','《拓跋史探》复习；陈寅恪《隋唐制度渊源略论稿》绪论浏览；研一上阅读总结','研一上总结：完成读书报告1篇（3000字）；确定研一下研究主题（如\'西郊祭天与北魏正统构建\'）']],
+[['2月','雅思强化：词汇进阶List1-7；听力：剑桥13 Test1；阅读：Test1 Passage1；写作Task2（历史类）','开学；研一下选课；导师见面','《魏书·礼志一》精读（西郊祭天仪节：方坛、神杆、女巫升坛摇鼓）；康乐第5-6章重读；《北魏平城时代》第7-8章','确定课程论文选题：以\'西郊祭天的礼仪复原\'或\'太和礼制改革\'为中心的史料研究'],['2月','词汇List8-14；听力：剑桥13 Test2；阅读：Test1 Passage2-3；口语Part1练习','课程学习；作业提交','《魏书·礼志二》精读（圜丘方泽、二郊制度）；《拓跋史探》第9篇；《隋书·礼仪志》对照','课程论文大纲：确定研究对象、史料范围（礼志+帝纪+隋书）、分析框架'],['3月','词汇List15-21；听力：剑桥13 Test3；阅读：Test2 Passage1；写作Task1练习','课程中期汇报；参加学术讲座','《隋书·礼仪志》郊祀仪注精读；赵永磊论文精读；《拓跋史探》第10篇','阅读李怡文教授专著/论文（物质文化研究法），思考礼制研究的物质路径'],['3月','词汇List22-28；听力：剑桥13 Test4；阅读：Test2 Passage2-3；口语Part2练习（描述一座古建筑）','课程论文初稿撰写','《通典·礼》明堂部分；《北魏平城时代》读完；平城明堂遗址考古报告','课程论文初稿：完成文献综述部分（2000字），梳理西郊祭天研究的既有成果'],['3月','词汇List29-35；听力：剑桥12 Test1；阅读：Test3 Passage1；写作Task2练习（社会类）','课程论文修改；参加讲座','《水经注·㶟水》与平城礼制建筑方位；明堂遗址发掘简报；《中国礼制史》方泽篇','课程论文初稿：完成史料分析部分（3000字），以《礼志》与帝纪互证西郊祭天仪节'],['3月','词汇List36-42；听力：剑桥12 Test2；阅读：Test3 Passage2-3；口语Part3练习','课程论文终稿','《魏书·天象志》相关记载；坝顶祭天遗址简报；《北魏西郊的沙汰》粗读','★CET-4考试倒计时（6月全国场）：制定冲刺计划，每天学习2小时'],['4月','词汇List43-49；听力：剑桥12 Test3；阅读：Test4 Passage1；写作Task2模考1篇','课程作业；课堂发言','西郊祭天仪节复原：方坛形制、木主、女巫、杀牲绕坛；《魏书》原文逐句比读','雅思强化：听力每天1套Section，阅读每天1篇，写作每周3篇，口语每天20分钟'],['4月','词汇List50-56；听力：剑桥12 Test4；阅读：Test4 Passage2-3；★雅思口语模考','课程论文提交','南郊圜丘仪节复原：冬至祭上帝于圜丘、乐舞用《皇矣》《云和》；与《隋书》互证','★CET-4考试（6月全国场，内大毕业线）：考前一周调整作息，模拟考试时间'],['4月','CET-4考后：复盘；雅思强化保持','课程学习；参加学术讲座','太和礼制改革专题：太和十三年议礼、十六年定圜丘之制、十八年罢西郊祭天诏书研读','CET-4出分等待；雅思强化复盘，首考规划留至研二上'],['4月','雅思强化：听力每天30分钟；阅读每周3篇；写作每周1篇','课程中期汇报','祭天与北魏正统构建专题：《争膺天命》精读；与东晋南朝\'郊丘合一\'比较；《北史》互证','★CET-4出分：达标维持；未达则安排补考'],['5月','雅思强化：词汇复习；听力：剑桥11 Test1；阅读：Test1全套','课程论文撰写','《北魏西郊的沙汰》精读（正祀与杂祀的转化）；《中国礼制史·魏晋南北朝卷》读完','核心论文选题确定：从课程论文中提炼（如\'从西郊到南郊：北魏祭天礼制的华夏化\'），目标投学术会议或期刊'],['5月','听力：剑桥11 Test2；阅读：Test2全套；写作Task2练习（科技类）','课程作业；参加讲座','楼劲《北魏开国史探》祭天礼制相关章节；《拓跋史探》读完；英文文献补充','核心论文大纲：研究问题、史料基础、分析方法（礼志+帝纪+隋书互证）、创新点、预期结论'],['5月','听力：剑桥11 Test3；阅读：Test3全套；口语Part2-3练习','课程论文修改','《隋唐制度渊源略论稿》礼仪章初读；祭天礼制与明堂制度；坝顶遗址再读','核心论文初稿撰写：完成引言+文献综述（3000字）'],['5月','听力：剑桥11 Test4；阅读：Test4全套；写作模考1套','课程论文终稿提交','西郊与南郊的比较研究文献；《通典》二郊制度节选；英文文献5篇','核心论文初稿：完成史料分析+结论（5000字），礼志、帝纪、隋书三方互证'],['6月','雅思强化（如需要）：词汇总复习；听力：剑桥10 Test1；阅读：Test1','期末复习；课程考试','祭天礼制与佛教关系初探：平城佛寺与皇家祭祀；宿白《魏晋南北朝唐宋考古文稿辑丛》相关篇','核心论文修改：根据导师反馈修改，目标投学术会议（如魏晋南北朝史学会年会）或期刊'],['6月','听力：剑桥10 Test2；阅读：Test2；写作Task2练习；口语模考','期末考试周','平城礼制建筑综述：明堂、圜丘、方泽、西郊坛场；考古与文献对照','学术会议投稿：确认会议主题和截止日期，提交论文摘要'],['6月','听力：剑桥10 Test3；阅读：Test3；寒假计划制定','期末总结；研二上选课','《通典·礼》复习；《北魏开国史探》读完；研一下阅读总结','研一下总结：完成课程论文1篇（8000字）；核心论文初稿完成（8000字）'],['7月','暑假·雅思：剑桥10 Test4；听力每天30分钟；阅读每天1篇','暑假','暑假精读：《魏书·礼志》再读（第三遍）；祭天礼制英文文献10篇；张金龙《北魏政治史》相关卷','暑假田野/档案调查：前往大同，补充明堂遗址、方山永固陵调查资料；查阅大同市图书馆北魏文献']],
+[['9月','雅思首考强化：词汇进阶；听力：剑桥9 Test1；阅读：Test1；写作Task2（学术类）','开学；研二上选课；导师见面','《隋唐制度渊源略论稿》礼仪章精读；英文文献（北魏郊祀研究）；康乐书复习','★RP选题确定：以\'北魏祭天礼制与国家正统建构\'为中心，结合史料互证与礼制复原，写500字研究构想'],['9月','听力：剑桥9 Test2；阅读：Test2；口语Part1-2练习','课程学习；作业提交','《隋唐制度渊源略论稿》读完；《北魏开国史探》礼制篇；张金龙《北魏政治史》祭天相关','RP大纲：研究背景、研究问题、史料基础、研究方法（史料互证+礼制复原）、章节结构、预期贡献'],['9月','听力：剑桥9 Test3；阅读：Test3；写作Task2练习（文化类）','课程中期汇报；参加学术讲座','《北魏西郊的沙汰》精读（第二遍）；英文郊祀文献5篇；张晓宇论文精读','RP初稿：完成引言+研究背景（2000字）；搜索目标导师近年论文，更新Zotero'],['10月','听力：剑桥9 Test4；阅读：Test4；口语Part3练习','课程论文撰写','明堂制度研究：《通典·明堂》+明堂遗址考古报告；祭天与明堂关系；李怡文论文精读','RP初稿：完成文献综述（3000字），梳理祭天礼制、北魏政治史、平城考古三条线'],['10月','★雅思首考冲刺：听力：剑桥8 Test1；阅读：Test1；写作模考1套','课程作业；参加讲座','★雅思首考冲刺：圜丘、方泽与二郊制度专题；《隋书·礼仪志》再读；张晓宇（皇家礼仪史）论文精读','RP初稿：完成研究方法+史料基础部分（2000字），说明礼志、帝纪、隋书互证方法与礼制复原路径'],['10月','听力：剑桥8 Test2；阅读：Test2；口语模考；写作Task2修改','课程论文修改','坝顶祭天遗址与\'阴山却霜\'专题；《魏书·世祖纪》相关记载；许振兴论文精读','RP初稿：完成核心章节框架（每章500字摘要）+预期结论；全文约8000字'],['10月','听力：剑桥8 Test3；阅读：Test3；写作Task1+Task2各1篇','课程论文终稿提交','祭天礼制与佛教关系深化：云冈石窟皇家功德与祭祀、平城佛寺布局；赵诣（北朝石窟与佛教物质文化）论文精读','★套磁信草稿：写第一封套磁信模板（300字），包含自我介绍、研究兴趣（北魏祭天）、为何选择该导师'],['11月','听力：剑桥8 Test4；阅读：Test4；★雅思首考模考全套','课程学习；参加学术讲座','西郊祭天与草原传统（四月祭天、部落大会）再探；《拓跋史探》相关篇重读；目标导师论文补充','★雅思首考（11月中下旬）：目标总分6.5，单项≥6.0；CET-6（12月场）同步备考'],['11月','雅思首考后：错题复盘；听力维持每天20分钟','课程中期汇报；学术会议参加','南郊圜丘与正统之争：北魏-东晋-南朝郊祀比较；英文文献5篇；RP相关文献','★雅思出分：达6.5(单项6.0)即申博语言达标；未达则研二下冲7'],['11月','雅思维持：听力每周3次；阅读每周2篇；写作每周1篇','课程论文撰写','祭天与皇权：太武帝灭佛前后的祭祀格局；平城礼制空间布局（南郊-西郊-明堂）；地方志史料','★套磁信定稿：根据不同导师定制3-5封套磁信，每封突出与该导师研究的契合点（礼制/物质文化/考古）'],['11月','雅思维持；口语练习每周2次','课程论文修改；参加讲座','平城考古最新研究（2024-2026年北魏祭天遗址新发现）；坝顶遗址发掘报告全文；《北魏平城时代》复习','★推荐信联系人确认：联系2-3位推荐人（硕士导师+课程老师+可能的田野指导老师）'],['12月','雅思维持；写作Task2练习（学术类）','课程论文终稿；期末复习','《中国礼制史》复习；祭天礼制英文文献10篇；RP相关文献补充','RP修改：根据导师反馈修改RP，目标12000字（英文RP通常10-15页）'],['12月','雅思维持；听力模考1套','期末考试周','《隋唐制度渊源略论稿》复习；《历史的观念》第1-2章；北魏史料复习','★CV/PS准备：撰写英文CV（2页）和个人陈述PS（500字），突出祭天研究经历'],['12月','寒假·雅思维持；听力每天20分钟','寒假；研二下选课','《历史的观念》第3-4章；目标导师最新论文精读（每人2篇）；祭天礼制研究展望','★申请材料清单：整理各校申请要求（港大、港中文、港城大、澳大），确认RP/CV/PS/WS要求'],['1月','寒假·雅思维持；阅读英文文献每天1篇','寒假','《历史学家的技艺》读完；《历史的观念》读完；RP英文文献（祭祀/礼制英文论文）','★RP英文版：开始将RP翻译/改写为英文，目标10-15页；先完成引言+文献综述（约3000词）'],['1月','寒假·雅思维持；写作练习每周2篇','寒假','《They Ask, You Answer》/RP写作指南；英文祭天术语整理（suburban sacrifice、jiao rites等）','RP英文版：完成研究方法+核心章节框架（约3000词）；套磁信英文版起草'],['1月','寒假·雅思维持；口语练习每周3次','寒假','RP相关英文文献补充；目标导师最新论文（2024-2026）；英文礼制研究综述1篇','RP英文版：完成核心章节+预期结论（约3000词）；CV/PS英文定稿'],['1月','寒假总结；雅思最终成绩确认','寒假总结；研二下计划','RP相关英文文献读完；研二上读书总结','★研二上总结：核心论文投稿/会议发表；RP英文版初稿完成（10000词）']],
+[['2月','雅思冲7/7.5（如已达标）；听力每周2次','开学；研二下选课；导师见面','RP英文文献补充阅读；北魏祭天研究最新动态（含2025-2026新出论文）','★RP终稿：根据导师反馈修改英文RP，目标10000词，格式符合各校要求'],['2月','雅思冲7/7.5；阅读英文文献每天1篇','课程学习；硕士论文开题准备','目标导师最新论文精读（每人2篇）；港澳高校历史系研究方向调研（礼制史/中古史）','★套磁信发送（第一批）：发送给核心冲刺导师（谢伟杰、林永昌、裴卿），每封定制；套磁前须回院系官网复核在职/职称/最新方向'],['2月','雅思冲7/7.5；写作每周1篇','课程作业；参加学术讲座','RP方法论相关文献；礼制史研究法英文文献','套磁回复跟进：如收到回复，积极回应；如一周未回复，发送跟进邮件'],['3月','雅思冲7/7.5；口语每周2次','硕士论文开题报告撰写','RP相关英文文献；北魏祭天史料（《魏书》礼志）补充检索','★套磁信发送（第二批）：发送给冲刺导师（黎明釗、张晓宇、陈钰琪）'],['3月','雅思冲7/7.5；听力每周2次','硕士论文开题答辩','目标导师论文补充阅读；套磁回复中导师建议阅读的文献','套磁回复跟进：与积极回复的导师进行邮件深入交流，可请求Zoom会议'],['3月','雅思冲7/7.5；阅读每周3篇','课程论文撰写；参加学术会议','RP最终修改所需文献；申请院校的系级研究方向','★面试模拟：准备英文自我介绍（3分钟）、研究计划陈述（5分钟），录屏复盘'],['3月','雅思冲7/7.5；写作每周1篇','课程论文修改','申请材料相关：各校Writing Sample要求调研（可提交祭天研究论文）','★套磁信发送（第三批）：发送给备选导师（赵诣、李怡文、苏昕）'],['4月','雅思冲7/7.5；口语模考每周1次','课程论文终稿提交','各校申请系统开放时间调研；申请材料最终审核','★申请材料最终版：RP、CV、PS、Writing Sample定稿'],['4月','雅思冲7/7.5；听力每周2次','期末复习；课程考试','硕士论文相关文献；《魏书·礼志》长编整理','★推荐信请求：正式向推荐人发送推荐信请求，附上CV、RP摘要'],['4月','雅思冲7/7.5；阅读每周3篇','期末考试周','硕士论文史料收集：祭天礼制史料长编（礼志、帝纪、隋书、通典）','★暑期计划：如套磁获得积极反馈，计划暑期前往目标院校拜访/线上交流'],['5月','雅思冲7/7.5；写作每周1篇','研二下总结；研三上选课','硕士论文第一章撰写：北魏祭天礼制研究综述','★套磁最终跟进：对所有未回复导师发送最后一次跟进邮件；确认意向名单'],['5月','暑假·雅思冲7/7.5；听力每天20分钟','暑假','硕士论文第一章修改：西郊祭天史料梳理','★申请系统注册：注册各校申请系统账号（港大、港中文、港城大、澳大）'],['5月','暑假·雅思冲7/7.5；阅读英文文献每天1篇','暑假','硕士论文第二章撰写：西郊祭天礼制复原','★申请材料上传：在各校申请系统中上传RP、CV、PS、Writing Sample'],['6月','暑假·雅思冲7/7.5；口语每周3次','暑假','硕士论文第二章修改：南郊圜丘与二郊制度','★推荐信跟进：确认推荐人已提交推荐信；如未提交，礼貌提醒'],['6月','暑假·雅思冲7/7.5；写作每周2篇','暑假','硕士论文第三章撰写：太和礼制改革与罢西郊','★套磁黄金期（6-9月）：与积极意向导师保持邮件联系，更新研究进展'],['6月','暑假·雅思冲7/7.5；听力每周3次','暑假','硕士论文第三章修改：祭天与正统建构','★HKPFS申请准备：撰写HKPFS申请材料（研究计划、个人陈述）'],['7月','暑假·雅思冲7/7.5；阅读每周5篇','暑假','硕士论文第四章撰写：平城礼制空间与考古互证','★HKPFS RGC申请预填：在RGC系统中预填个人信息，准备材料'],['7月','暑假总结；研三上计划','暑假总结；研三上选课','硕士论文第四章修改：祭天研究总结','★研二下总结：套磁完成（3-5位积极意向）；申请材料全部备齐']],
+[['9月','—（雅思已达标）','开学；研三上选课；导师见面','硕士论文第五章撰写：西郊祭天与草原传统','★HKPFS RGC申请开放（9月1日）：正式提交HKPFS RGC申请'],['9月','—','课程学习；硕士论文推进','硕士论文第五章修改：史料长编补遗','★HKPFS院校申请：在各校申请系统中提交完整申请，引用RGC编号'],['9月','—','课程作业；参加学术讲座','硕士论文第六章撰写：南郊圜丘与正统之争','★网申提交（第一批）：提交港大、港中文、港城大、澳门大学申请'],['9月','—','课程中期汇报；硕士论文推进','硕士论文第六章修改：礼制比较（西郊-南郊）','★面试准备：针对已提交申请的院校，准备面试PPT（10页），突出祭天研究'],['10月','—','课程论文撰写；硕士论文推进','硕士论文第七章撰写：祭天与北魏政治','★网申提交（第二批）：补申其他院校或项目；确认所有申请材料'],['10月','—','课程论文修改；参加学术讲座','硕士论文第七章修改：考古互证章节','★面试通知：开始收到面试通知；每次面试前研究导师最新论文'],['10月','—','课程论文终稿提交','硕士论文第八章撰写：平城礼制空间','★面试高峰期：参加各校面试（Zoom/现场），面试后24小时内发感谢信'],['10月','—','期末复习；课程考试','硕士论文第八章修改：结论撰写','★申请状态跟进：定期检查各校申请系统状态；与招生办公室保持沟通'],['11月','—','期末考试周','硕士论文第九章撰写：总结与展望','★面试继续：参加后续面试；如收到条件录取（conditional offer），确认条件'],['11月','—','期末总结；寒假计划','硕士论文第九章修改：摘要初稿','★HKPFS截止提醒：12月1日HKPFS RGC（中午12:00）与院校申请（23:59）截止'],['11月','寒假·硕士论文','寒假','硕士论文第十章撰写：附录（史料长编）','★常规申请截止：部分院校常规申请截止（11-12月），确认各校时间'],['12月','寒假·硕士论文','寒假','硕士论文第十章修改：参考文献整理','★HKPFS截止（12月1日）：确认HKPFS初始申请和院校申请均已完成'],['12月','寒假·硕士论文','寒假','硕士论文第十一章（结论）撰写','★offer开始发放：部分院校开始发放早期offer；如收到，及时回应'],['12月','寒假·硕士论文','寒假','硕士论文结论修改：摘要+关键词','★面试继续：参加12月面试；与意向导师保持联系，更新申请进展'],['1月','寒假·硕士论文','寒假；研三下选课','硕士论文摘要+关键词；附录整理','★offer高峰期：各校集中发放offer；比较offer并准备接受'],['1月','寒假·硕士论文','寒假','硕士论文格式调整；参考文献最终核对','★offer确认：确定接受哪所学校的offer，在截止日前接受并缴纳留位费'],['1月','寒假总结；研三下计划','寒假总结','硕士论文全文通读；修改错别字和格式','★研三上总结：申请全部完成；offer确认；硕士论文初稿完成'],['1月','—','—','—','★寒假后：准备硕士论文外审/盲审；联系博士导师确认入学事宜']],
+[['2月','—','开学；研三下选课','硕士论文外审准备；格式最终调整','★博士入学准备：联系博士导师，确认入学时间、奖学金、研究方向（北魏祭天）'],['2月','—','课程学习（如有）；硕士论文修改','硕士论文外审提交；北魏祭天研究资料整理归档','★签证/住宿：如赴港澳，开始办理学生签证（港澳通行证+逗留签注）'],['2月','—','课程作业；参加学术讲座','硕士论文外审意见回收；根据意见修改','★博士预科阅读：根据博士导师建议，阅读博士阶段核心文献（礼制史、北朝史）'],['3月','—','课程中期汇报；硕士论文答辩准备','硕士论文答辩PPT制作（20页）；祭天研究成果总结','★博士研究计划细化：与博士导师沟通，细化博士阶段研究计划（北魏祭天礼制专题）'],['3月','—','课程论文撰写；硕士论文答辩','★硕士论文答辩：参加硕士论文答辩，根据答辩委员会意见修改','★入学手续：办理入学注册、选课、学生卡、银行账户等手续（如赴港澳）'],['3月','—','课程论文修改；参加学术会议','硕士论文最终修改；提交最终版','★博士第一学期课程：根据博士项目要求选课（史学理论、研究方法）'],['3月','—','课程论文终稿提交','硕士论文归档；北魏祭天研究数据备份','★博士研究启动：在博士导师指导下，确定博士论文选题方向（祭天礼制与北魏国家）'],['4月','—','期末复习；课程考试','—','★博士第一学期适应：适应新环境、新课程、新导师；建立学习节奏'],['4月','—','期末考试周','—','★博士研究推进：开始博士论文前期研究（文献综述、史料长编扩充）'],['4月','—','毕业手续；离校准备','—','★硕士毕业：领取硕士学位证书、毕业证书；办理离校手续'],['4月','—','—','—','★搬迁：如赴港澳，安排搬迁、住宿、生活适应'],['5月','—','—','—','★博士第一学期结束：课程考核通过；与博士导师进行第一次正式研究讨论'],['5月','—','—','—','★暑假研究计划：制定博士第一学年暑假研究计划（平城考古调查/史料长编）'],['5月','—','—','—','★学术网络建设：参加学术会议（魏晋南北朝史、礼制研究）、讲座，建立学术人脉'],['6月','—','—','—','★博士研究深化：在导师指导下深化研究问题，开始撰写第一篇学术论文'],['6月','—','—','—','★语言维持：继续保持学术英语阅读和写作；如需要，学习第二外语（日语）'],['6月','—','—','—','★三年总结：回顾三年申博历程，总结经验教训；制定博士四年研究规划'],['6月','—','—','—','★🎉 博士阶段正式开始：北魏祭天礼制+史料考古互证研究全面启动']],
+];
+
+/* 当前所处学期：按起始年月匹配 */
+function phdTerm(){
+  var now = new Date();
+  var y = now.getFullYear(), m = now.getMonth() + 1;
+  var marks = [
+    {i:0, y:2026, m:9}, {i:1, y:2027, m:2}, {i:2, y:2027, m:9},
+    {i:3, y:2028, m:2}, {i:4, y:2028, m:9}, {i:5, y:2029, m:2}
+  ];
+  var hit = marks[0];
+  for (var k = 0; k < marks.length; k++) {
+    if (y > marks[k].y || (y === marks[k].y && m >= marks[k].m)) hit = marks[k];
+  }
+  var start = new Date(hit.y, hit.m - 1, 1);
+  var week = Math.floor((now - start) / (7 * 24 * 3600 * 1000)) + 1;
+  if (week < 1) week = 1;
+  if (week > 18) week = 18;
+  return {i: hit.i, week: week, name: PHD_OVERVIEW[hit.i].term};
+}
+
+/* 当前查看的周次（可切换），null 时跟随真实本周 */
+var phdView = null;
+function phdCur(){
+  if(!phdView){ var t0 = phdTerm(); phdView = {i: t0.i, w: t0.week}; }
+  return phdView;
+}
+function phdIsNow(){
+  var t = phdTerm(), v = phdCur();
+  return (t.i === v.i && t.week === v.w);
+}
+function phdShift(n){
+  var v = phdCur();
+  var abs = v.i * 18 + (v.w - 1) + n;
+  if(abs < 0) abs = 0;
+  if(abs > 107) abs = 107;
+  phdView = {i: Math.floor(abs / 18), w: (abs % 18) + 1};
+  renderPhdPlan();
+}
+function phdGoTerm(i){
+  var v = phdCur();
+  phdView = {i: i, w: (i === v.i ? v.w : 1)};
+  renderPhdPlan();
+}
+function phdGoWeek(w){
+  var v = phdCur();
+  phdView = {i: v.i, w: w};
+  renderPhdPlan();
+}
+function phdToday(){
+  var t = phdTerm();
+  phdView = {i: t.i, w: t.week};
+  renderPhdPlan();
+}
+
+function renderPhdPlan(){
+  var box = document.getElementById('phdPlan');
+  if(!box) return;
+  var v = phdCur();
+  var cur = PHD_OVERVIEW[v.i];
+  var wk = (PHD_WEEKS[v.i] && PHD_WEEKS[v.i][v.w - 1]) || ['', '—', '—', '—', '—'];
+  var isNow = phdIsNow();
+
+  /* 右上角：可切换的学期 / 周次 */
+  var sub = document.getElementById('phdSub');
+  if(sub){
+    sub.className = 'phd-sw';
+    var termOpts = '';
+    for(var a = 0; a < PHD_TERMS.length; a++){
+      termOpts += '<option value="' + a + '"' + (a === v.i ? ' selected' : '') + '>' + escHtml(PHD_TERMS[a]) + '</option>';
+    }
+    var weekOpts = '';
+    for(var b = 1; b <= 18; b++){
+      weekOpts += '<option value="' + b + '"' + (b === v.w ? ' selected' : '') + '>第 ' + b + ' 周</option>';
+    }
+    sub.innerHTML =
+      '<button class="phd-arrow" type="button" onclick="phdShift(-1)" title="上一周">‹</button>' +
+      '<select class="phd-sel" onchange="phdGoTerm(parseInt(this.value,10))">' + termOpts + '</select>' +
+      '<select class="phd-sel" onchange="phdGoWeek(parseInt(this.value,10))">' + weekOpts + '</select>' +
+      '<button class="phd-arrow" type="button" onclick="phdShift(1)" title="下一周">›</button>' +
+      '<button class="phd-today' + (isNow ? ' on' : '') + '" type="button" onclick="phdToday()">本周</button>';
+  }
+
+  var html = '';
+
+  /* 当前周的具体任务 */
+  html += '<div class="phd-now">' +
+    '<div class="phd-now-t">' + escHtml(cur.term) + ' · 第 ' + v.w + ' 周' + (isNow ? ' · 本周' : '') + '</div>' +
+    '<div class="phd-now-d">' + escHtml(cur.time) + ' · ' + escHtml(cur.stage) + (wk[0] ? ' · ' + escHtml(wk[0]) : '') + '</div>' +
+    '<div class="phd-line"><span>雅思</span>' + escHtml(wk[1]) + '</div>' +
+    '<div class="phd-line"><span>课程</span>' + escHtml(wk[2]) + '</div>' +
+    '<div class="phd-line"><span>阅读</span>' + escHtml(wk[3]) + '</div>' +
+    '<div class="phd-line"><span>申博</span>' + escHtml(wk[4]) + '</div>' +
+    '</div>';
+
+  /* 本学期阶段总任务 */
+  html += '<div class="phd-now" style="margin-top:8px">' +
+    '<div class="phd-now-t">' + escHtml(cur.term) + ' · 学期总任务</div>' +
+    '<div class="phd-line"><span>核心</span>' + escHtml(cur.task) + '</div>' +
+    '<div class="phd-line"><span>雅思</span>' + escHtml(cur.ielts) + '</div>' +
+    '<div class="phd-line"><span>申博</span>' + escHtml(cur.apply) + '</div>' +
+    '</div>';
+
+  /* 三年总览 */
+  var rows = PHD_OVERVIEW.map(function(o, i){
+    return '<tr class="' + (i === v.i ? 'on' : '') + '">' +
+      '<td><b>' + escHtml(o.term) + '</b></td>' +
+      '<td>' + escHtml(o.time) + '</td>' +
+      '<td>' + escHtml(o.stage) + '</td>' +
+      '<td>' + escHtml(o.task) + '</td>' +
+      '</tr>';
+  }).join('');
+  html += '<details class="plan-toggle"><summary>三年阶段总览（6 学期）</summary>' +
+    '<div class="phd-table-wrap"><table class="phd-table">' +
+    '<thead><tr><th>学期</th><th>时间</th><th>阶段</th><th>核心任务</th></tr></thead>' +
+    '<tbody>' + rows + '</tbody></table></div></details>';
+
+  /* 关键死线 */
+  var dls = PHD_DEADLINES.map(function(d){
+    return '<div class="phd-dl ' + (d.level === '极高' ? 'hot' : '') + '">' +
+      '<div class="phd-dl-n">' + escHtml(d.name) + '</div>' +
+      '<div class="phd-dl-t">' + escHtml(d.time) + '</div>' +
+      '<div class="phd-dl-p">' + escHtml(d.note) + '</div>' +
+      '</div>';
+  }).join('');
+  html += '<details class="plan-toggle"><summary>⚠️ 关键死线提醒（6 条）</summary>' + dls + '</details>';
+
+  /* 目标导师 */
+  var sups = PHD_SUPERVISORS.map(function(s){
+    return '<div class="phd-sup">' +
+      '<div class="phd-sup-h"><b>' + escHtml(s.n) + '</b><span>' + s.m + '</span></div>' +
+      '<div class="phd-sup-s">' + escHtml(s.s) + '</div>' +
+      '<div class="phd-sup-d">' + escHtml(s.d) + '</div>' +
+      '<div class="phd-sup-p">' + escHtml(s.p) + '</div>' +
+      '</div>';
+  }).join('');
+  html += '<details class="plan-toggle"><summary>🎯 目标导师清单（核心 6 位）</summary>' + sups + '</details>';
+
+  box.innerHTML = html;
+}
+
+/* 启动：先用本地数据渲染首屏，再用云端数据覆盖 */
+render();
+if(db){
+  /* 有云端环境：拉取最新数据后覆盖本地 */
+  setSyncState('正在从云端同步…');
+  cloudPull().then(function(s){
+    if(s){
+      state = s;
+      try{ localStorage.setItem(LSK, JSON.stringify(state)); }catch(e){}
+      render();
+      setSyncState('已同步到最新数据', 'ok');
+    } else {
+      setSyncState('未连接到云端，当前显示本机数据', 'error');
+    }
+  }).catch(function(err){
+    console.error('[database] 拉取失败:', err);
+    setSyncState('云端同步失败，当前显示本机数据', 'error');
+  });
+} else {
+  /* 本机模式（无云端环境）：不打扰，只在数据管理区提示 */
+  markLocalMode();
+}
+function markLocalMode(){
+  var el = document.getElementById('ioTip');
+  if(el){
+    el.innerHTML = '本机存储模式：数据只保存在这台设备，建议定期点“导出备份”存一份 JSON';
+    el.style.color = '#b45309';
+    el.style.fontWeight = '600';
+  }
+}
+
+</script>
+</body>
+</html>
