@@ -432,7 +432,7 @@ let viewMonth = new Date(); viewMonth.setDate(1);
 function load(){
   try{ return upgrade(JSON.parse(localStorage.getItem(LS_KEY)) || seed()); }catch(e){ return seed(); }
 }
-/* 旧数据升级：补齐新增的学习子类、把「学习 1 小时」改成「学习 5 小时+」 */
+/* 旧数据升级：补齐学习子类、健身 1.5 小时、去掉旧的总「学习 X 小时」与爬坡/椭圆机 */
 function upgrade(s){
   if(!s || !s.tasks) return seed();
   if(!s.done) s.done = {};
@@ -441,11 +441,12 @@ function upgrade(s){
   for(i = 0; i < s.tasks.length; i++){
     t = s.tasks[i];
     if(!t) continue;
-    if(typeof t.name === 'string' && t.name.indexOf('学习') >= 0 && t.name.indexOf('1 小时') >= 0){
-      t.name = '学习 5 小时+';
-    }
     if(typeof t.name === 'string' && t.name.indexOf('健身') >= 0 && t.name.indexOf('30 分钟') >= 0){
       t.name = '健身 1.5 小时';
+    }
+    /* 学习已拆成子类，去掉总的「学习 5 小时+」 */
+    if(typeof t.name === 'string' && t.name.indexOf('学习') >= 0 && t.name.indexOf('小时') >= 0){
+      t.name = '__DROP__';
     }
     /* 「研究 / 读论文」改为「阅读专著 / 文献 / 史料」 */
     if(t.cat === 'research' && typeof t.name === 'string' && t.name.indexOf('研究') >= 0){
@@ -458,7 +459,7 @@ function upgrade(s){
   for(i = 0; i < s.tasks.length; i++){
     t = s.tasks[i];
     var nm = (t && typeof t.name === 'string') ? t.name : '';
-    if(nm.indexOf('爬坡') >= 0 || nm.indexOf('椭圆机') >= 0) continue;
+    if(nm.indexOf('爬坡') >= 0 || nm.indexOf('椭圆机') >= 0 || nm.indexOf('__DROP__') >= 0) continue;
     kept.push(t);
   }
   s.tasks = kept;
@@ -503,7 +504,6 @@ function seed(){
   return {
     tasks:[
       {id:1, cat:'fit', name:'健身 1.5 小时', sub:''},
-      {id:2, cat:'study', name:'学习 5 小时+', sub:''},
       {id:3, cat:'research', name:'阅读专著 / 文献 / 史料', sub:'阅读专著/文献/史料'},
       {id:4, cat:'study', name:'雅思', sub:'雅思'},
       {id:6, cat:'study', name:'申博推进', sub:'申博'},
